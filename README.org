@@ -1,0 +1,920 @@
+-*- mode:org; fill-column:70; coding:utf-8; -*-
+* org-mode configuration
+#+STARTUP: overview customtime noalign logdone hidestars
+#+TAGS: ARCHIVE(a) WORK(w) LIFE(l) EMACS(e) IMPORTANT(i) Difficult(d) Communication(c) RECOMMENDATE(r) Tool(t) Habit(h) noexport(n) Share (s) BLOG(b)
+#+SEQ_TODO: TODO HALF ASSIGN | DONE BYPASS DELEGATE CANCELED DEFERRED
+#+DRAWERS: HIDDEN CODE CONF EMAIL WEBPAGE SNIP
+#+PRIORITIES: A D C
+#+ARCHIVE: %s_done::** Finished Tasks
+#+AUTHOR: dennyzhang.com (denny@dennyzhang.com)
+#+OPTIONS: toc:2 \n:t ^:nil creator:nil d:nil
+* [#A] Ruby                                                        :Personal:
+- gem install/list
+- RVM: Ruby Version Manager
+** Ruby的block interator
+#+begin_src ruby
+class Hello
+    def sayHello(name)
+      yield
+      puts "Hello #{name}"
+      yield
+    end
+end
+
+myHello = Hello.new()
+myHello. sayHello("hinus"){ puts "in the block" } #如果函数有参数的话,应该放在函数名之后,在块之前。
+#+end_src
+*** useful link
+   http://www.it314.com/ror/286.html\\
+   Ruby教程之四、块(BLOCK)和迭代器(Iterator) - Sam的网络技术博客
+** Ruby迭代器each、map、collect、inject
+http://hi.baidu.com/code4fun/blog/item/c608b60eadf1eaec36d12205.html\\
+Ruby迭代器each、map、collect、inject_._百度空间
+
+说明：
+each——连续访问集合的所有元素
+collect—-从集合中获得各个元素传递给block,block返回的结果生成新的集合。
+map——-同collect。
+inject——遍历集合中的各个元素,将各个元素累积成返回一个值。
+
+例子：
+
+    def debug(arr)
+        puts '--------'
+        puts arr
+    end
+
+    h = [1,2,3,4,5]
+    h1 = h
+    h1.each{|v|puts sprintf('values is:%s',v)}
+
+    h2 = h.collect{|x| [x,x*2]}
+    debug h2
+
+    h3 = h.map{|x| x*3 }
+    debug h3
+
+    h4 = h.inject{|sum,item| sum+item}
+    debug h4
+** Hash: key -- value的字典
+In Ruby a Hash is a key, value store
+
+h = Hash.new
+h['one'] = 1
+h['one'] #=> 1
+h['two'] #=> nil
+
+the {0} is a block that will be evaluated if you where to call a Key that did not exist, it's like a default value.
+
+h = Hash.new {0}
+h['one'] #=> 0
+h = Hash.new {|hash,key| "#{key} has Nothing"}
+h['one'] #=> "one has Nothing"
+*** DONE ruby check whether a dictionary has a given key: session.has_key?("user")
+    CLOSED: [2014-09-23 Tue 17:58]
+*** useful link
+http://stackoverflow.com/questions/4719272/dictionary-hash\\
+*** DONE dump hash table
+    CLOSED: [2010-02-03 星期三 15:41]
+    hash.each_key {|key|
+      paralist_str = paralist_str + "#{key}=#{hash[key]}&"
+    }
+http://www.ruby-doc.org/docs/ProgrammingRuby/html/ref_c_hash.html\\
+*** DONE ruby dictionary
+  CLOSED: [2016-01-21 Thu 16:36]
+#+BEGIN_SRC ruby
+service_monitor_recipe_dict = {
+  "mongodb"=>["common_auth", "nagios_client_mongodb"],
+  "redis"=>[["item1", "item2"], "value"]}
+#+END_SRC
+** nil
+** DONE ruby parse filename string
+  CLOSED: [2016-04-03 Sun 19:23]
+default['sandbox_test']['docker_image_url'] = 'http://172.17.0.1:8001/totvslabs_mdm_latest.tar.gz'
+
+irb
+str1 = 'http://172.17.0.1:8001/totvslabs_mdm_latest.tar.gz'
+require 'pathname'
+
+Pathname.new(str1).basename
+Pathname.new(str1).dirname
+
+docker_image_file = 'totvslabs_mdm.tar.gz'
+tag_name = 'v2'
+** [#A] Array操作                                                 :Important:
+    http://www.ruby-doc.org/docs/ProgrammingRuby/html/ref_c_array.html\\
+    Programming Ruby: The Pragmatic Programmer's Guide
+
+   collect, detect, each_with_index, entries, find, find_all, grep, include?, map, max, member?, min, reject, select, sort, to_a
+*** TODO pack有什么用途
+    arr.pack ( aTemplateString ) -> aBinaryString
+    Packs the contents of arr into a binary sequence according to the directives in aTemplateString (see Table 22.1 on page 285). Directives ``A,'' ``a,'' and ``Z'' may be followed by a count, which gives the width of the resulting field. The remaining directives also may take a count, indicating the number of array elements to convert. If the count is an asterisk (``*''), all remaining array elements will be converted. Any of the directives ``sSiIlL'' may be followed by an underscore (``_'') to use the underlying platform's native size for the specified type; otherwise, they use a platform-independent size. Spaces are ignored in the template string. See also String#unpack on page 378.
+
+    a = [ "a", "b", "c" ]
+    n = [ 65, 66, 67 ]
+    a.pack("A3A3A3")   ??       "a[visible space][visible space]b[visible space][visible space]c[visible space][visible space]"
+    a.pack("a3a3a3")   ??       "a\000\000b\000\000c\000\000"
+    n.pack("ccc")      ??       "ABC"
+*** set operation: intersection &, repetition *, Concatenation +, difference -, union |
+    [ 1, 1, 3, 5 ] & [ 1, 2, 3 ]       ??        [1, 3]
+    [ 1, 2, 3 ] * 3    ??        [1, 2, 3, 1, 2, 3, 1, 2, 3]
+    [ 1, 2, 3 ] + [ 4, 5 ]     ??        [1, 2, 3, 4, 5]
+    [ 1, 1, 2, 2, 3, 3, 3, 4, 5 ] - [ 1, 2, 4 ]        ??        [3, 5]
+    [ "a", "b", "c" ] | [ "c", "d", "a" ]      ??        ["a", "b", "c", "d"]
+*** Comparison <=>
+    [ "a", "a", "c" ]    <=> [ "a", "b", "c" ]         ??        -1
+*** collect                                                       :IMPORTANT:
+    Returns a new array by invoking block once for every element, passing each element as a parameter to block. The result of block is used as the given element in the new array. See also Array#collect! .
+
+    a = [ "a", "b", "c", "d" ]
+    a.collect {|x| x + "!" }        ??       ["a!", "b!", "c!", "d!"]
+    a       ??       ["a", "b", "c", "d"]
+*** DONE collect!与collect有什么区别                              :IMPORTANT:
+    是修改原对象, 还是创建一个新的对象,
+*** DONE assoc与rassoc有什么不同                                  :IMPORTANT:
+    assoc查找第一维, rassoc查找第二维
+**** assoc
+     arr.assoc( key ) -> anArray or nil
+     Searches through an array whose elements are also arrays comparing anObject with the first element of each contained array using anObject  .== . Returns the first contained array that matches (that is, the first associated array), or nil if no match is found. See also  Array#rassoc  .
+
+     s1 = [ "colors", "red", "blue", "green" ]
+     s2 = [ "letters", "a", "b", "c" ]
+     s3 = "foo"
+     a  = [ s1, s2, s3 ]
+     a.assoc("letters")      ??       ["letters", "a", "b", "c"]
+     a.assoc("foo")  ??       nil
+**** rassoc
+     arr.rassoc( key ) -> anArray or nil
+     Searches through the array whose elements are also arrays. Compares key with the second element of each contained array using ==. Returns the first contained array that matches. See also assoc.
+
+     a = [ [ 1, "one"], [2, "two"], [3, "three"], ["ii", "two"] ]
+     a.rassoc("two")         ??       [2, "two"]
+     a.rassoc("four")        ??       nil
+*** each与each_index                                              :IMPORTANT:
+**** each
+     arr.each {| item | block } -> arr
+     Calls block once for each element in arr, passing that element as a parameter.
+
+     a = [ "a", "b", "c" ]
+     a.each {|x| print x, " -- " }
+
+     produces:
+
+     a -- b -- c --
+**** each_index
+     arr.each_index {| anIndex | block } -> arr
+     Same as  Array#each  , but passes the index of the element instead of the element itself.
+
+     a = [ "a", "b", "c" ]
+     a.each_index {|x| print x, " -- " }
+
+     produces:
+
+     0 -- 1 -- 2 --
+*** flatten
+    arr.flatten -> anArray
+
+    Returns a new array that is a one-dimensional flattening of this array (recursively). That is, for every element that is an array, extract its elements into the new array.
+
+    s = [ 1, 2, 3 ]         ??       [1, 2, 3]
+    t = [ 4, 5, 6, [7, 8] ]         ??       [4, 5, 6, [7, 8]]
+    a = [ s, t, 9, 10 ]     ??       [[1, 2, 3], [4, 5, 6, [7, 8]], 9, 10]
+    a.flatten       ??       [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+*** indexes
+    arr.indexes( i1, i2, ... iN ) -> anArray
+
+    Returns a new array consisting of elements at the given indices. May insert nil for indices out of range.
+
+    a = [ "a", "b", "c", "d", "e", "f", "g" ]
+    a.indexes(0, 2, 4)      ??       ["a", "c", "e"]
+    a.indexes(0, 2, 4, 12)  ??       ["a", "c", "e", nil]
+*** join
+    arr.join( aSepString=$, ) -> aString
+
+    Returns a string created by converting each element of the array to a string, separated by aSepString.
+
+    [ "a", "b", "c" ].join  ??       "abc"
+    [ "a", "b", "c" ].join("-")     ??       "a-b-c"
+*** nitems
+    arr.nitems -> anInteger
+
+    Returns the number of non-nil elements in arr. May be zero.
+
+    [ 1, nil, 3, nil, 5 ].nitems       ??       3
+*** replace
+    arr.replace( anOtherArray ) -> arr
+
+    Replaces the contents of arr with the contents of anOtherArray, truncating or expanding if necessary.
+
+    a = [ "a", "b", "c", "d", "e" ]
+    a.replace( [ "x", "y", "z" ] )  ??       ["x", "y", "z"]
+    a       ??       ["x", "y", "z"]
+*** reverse!
+    arr.reverse! -> arr or nil
+
+    Same as reverse, but returns nil if arr is unchanged (arr .length is zero or one).
+
+    a = [ "a", "b", "c" ]
+    a.reverse!      ??       ["c", "b", "a"]
+    a       ??       ["c", "b", "a"]
+    < 1 >.reverse!  ??       nil
+*** reverse_each
+    arr.reverse_each {| | block }
+
+    Same as Array#each , but traverses arr in reverse order.
+
+    a = [ "a", "b", "c" ]
+    a.reverse_each {|x| print x, " " }
+
+    produces:
+
+    c b a
+*** rindex与index的不同
+**** rindex
+     arr.rindex( anObject ) -> anInteger or nil
+
+     Returns the index of the last object in arr such that the object == anObject. Returns nil if no match is found.
+
+     a = [ "a", "b", "b", "b", "c" ]
+     a.rindex("b")   ??       3
+     a.rindex("z")   ??       nil
+**** index
+     arr.index( anObject ) -> anInteger or nil
+
+     Returns the index of the first object in arr such that the object == anObject. Returns nil if no match is found.
+
+     a = [ "a", "b", "c" ]
+     a.index("b")       ??       1
+     a.index("z")       ??       nil
+*** shift与unshift的不同
+**** shift
+     arr.shift -> anObject or nil
+
+     Returns the first element of arr and removes it (shifting all other elements down by one). Returns nil if the array is empty.
+
+     args = [ "-m", "-q", "filename" ]
+     args.shift      ??       "-m"
+     args    ??       ["-q", "filename"]
+**** unshift
+     arr.unshift( anObject ) -> arr
+
+     Prepends anObject to the front of arr, and shifts all other elements up one.
+
+     a = [ "b", "c", "d" ]
+     a.unshift("a")  ??       ["a", "b", "c", "d"]
+*** slice与slice!
+**** slice
+     arr.slice( anInteger ) -> anObject
+     arr.slice( start, length ) -> aSubArray
+     arr.slice( aRange ) -> aSubArray
+
+     Synonym for Array#< > .
+
+     a = [ "a", "b", "c", "d", "e" ]
+     a.slice(2) + a.slice(0) + a.slice(1)    ??       "cab"
+     a.slice(6)      ??       nil
+     a.slice(1, 2)   ??       ["b", "c"]
+     a.slice(1..3)   ??       ["b", "c", "d"]
+     a.slice(4..7)   ??       ["e"]
+     a.slice(6..10)  ??       nil
+     a.slice(-3, 3)  ??       ["c", "d", "e"]
+**** slice!
+     arr.slice!( anInteger ) -> anObject or nil
+     arr.slice!( start, length ) -> aSubArray or nil
+     arr.slice!( aRange ) -> aSubArray or nil
+
+     Deletes the element(s) given by an index (optionally with a length) or by a range. Returns the deleted object, subarray, or nil if the index is out of range. Equivalent to:
+
+     def slice!(*args)
+     result = self[*args]
+     self[*args] = nil
+     result
+     end
+
+     a = [ "a", "b", "c" ]
+     a.slice!(1)     ??       "b"
+     a       ??       ["a", "c"]
+     a.slice!(-1)    ??       "c"
+     a       ??       ["a"]
+     a.slice!(100)   ??       nil
+     a       ??       ["a"]
+*** sort                                                          :IMPORTANT:
+    arr.sort -> anArray
+    arr.sort {| a,b | block }
+
+    -> anArray
+
+    Returns a new array created by sorting arr. Comparisons for the sort will be done using the <=> operator or using an optional code block. The block implements a comparison between a and b, returning -1, 0, or +1.
+
+    a = [ "d", "a", "e", "c", "b" ]
+    a.sort  ??       ["a", "b", "c", "d", "e"]
+    a.sort {|x,y| y <=> x }         ??       ["e", "d", "c", "b", "a"]
+*** to_s
+    arr.to_s -> aString
+
+    Returns arr .join.
+
+    [ "a", "e", "i", "o" ].to_s     ??       "aeio"
+*** uniq
+    arr.uniq -> anArray
+
+    Returns a new array by removing duplicate values in arr.
+
+    a = [ "a", "a", "b", "b", "c" ]
+    a.uniq  ??       ["a", "b", "c"]
+*** Append
+    [ 1, 2 ] << "c" << "d" << [ 3, 4 ]         ??        [1, 2, "c", "d", [3, 4]]
+*** Equality
+    Equality---Two arrays are equal if they contain the same number of elements and if each element is equal to (according to  Object#==  ) the corresponding element in the other array.
+
+    [ "a", "c" ]    == [ "a", "c", 7 ]      ??       false
+    [ "a", "c", 7 ] == [ "a", "c", 7 ]      ??       true
+    [ "a", "c", 7 ] == [ "a", "d", "f" ]    ??       false
+*** compact
+    Returns a new array based on the arr with all nil elements removed.
+
+    [ "a", nil, "b", nil, "c", nil ].compact        ??       ["a", "b", "c"]
+*** fill
+    arr.fill( anObject ) -> arr
+    arr.fill( anObject, start [, length ] ) -> arr
+    arr.fill( anObject, aRange ) -> arr
+
+    Sets the selected elements of arr (which may be the entire array) to anObject. A start of nil is equivalent to zero. A length of nil is equivalent to arr.length.
+
+    a = [ "a", "b", "c", "d" ]
+    a.fill("x")     ??       ["x", "x", "x", "x"]
+    a.fill("z", 2, 2)       ??       ["x", "x", "z", "z"]
+    a.fill("y", 0..1)       ??       ["y", "y", "z", "z"]
+*** clear
+    Removes all elements from arr.
+
+    a = [ "a", "b", "c", "d", "e" ]
+    a.clear         ??       []
+*** useful link
+    http://www.ruby-doc.org/docs/ProgrammingRuby/html/ref_c_array.html\\
+    Programming Ruby: The Pragmatic Programmer's Guide
+** logging
+*** DONE simple log: file name, function name, line number
+     CLOSED: [2009-06-26 星期五 11:13]
+  def self.log_header(message)
+    call_str = caller.first
+    array = call_str.split(":")
+    if array.size != 3
+      raise
+    end
+    # just get the short filename
+    short_filename = array<0>
+    rindex = short_filename.rindex("/")
+    if rindex != nil
+      short_filename = short_filename[rindex + 1 , short_filename.size ]
+    end
+    line_number = array<1>
+    # get function name
+    function_name = array<2>
+    lindex = function_name.index("`")
+    rindex = function_name.rindex("'")
+    if lindex !=nil and rindex != nil
+      function_name = function_name[lindex + 1, rindex - lindex -1]
+    end
+    str = Time.now.to_s
+    str = str + " " + short_filename + ":" + function_name + ":" + line_number + ":" + message
+    self.log_header(str)
+  end
+** http server
+*** DONE Send http request
+    CLOSED: [2010-02-03 星期三 09:45]
+**** basic use
+#+BEGIN_EXAMPLE
+require 'net/https'
+require 'net/http'
+require 'openssl'
+
+puts "hello"
+https = Net::HTTP.new('10.32.173.154', 443)
+https.use_ssl = true
+https.verify_mode = OpenSSL::SSL::VERIFY_NONE
+request = Net::HTTP::Post.new('/mgmt_login/verify')
+request.body = 'auth_type=local&auth_addr=&username=MauiAdmin&password=password'
+request['Content-Length'] = request.body.length()
+request['ACCEPT'] = 'application/xml'
+cookie = ''
+result = https.start{ |http|
+  response, data = http.request(request)
+  puts "response:#{response}, data:#{data}"
+  cookie = response['set-cookie']
+  cookie = cookie.slice(/_gui_session_id=\w*/)
+}
+puts "cookie:#{cookie}"
+
+request = Net::HTTP::Post.new('/mgmt/get_system_list')
+request.body = ''
+request['Content-Length'] = request.body.length()
+request['ACCEPT'] = 'application/xml'
+request['Cookie'] = cookie
+result = https.start{ |http|
+  response, data = http.request(request)
+  puts "response:#{response}, data:#{data}"
+  cookie = response['set-cookie']
+  cookie = cookie.slice(/_gui_session_id=\w*/)
+  puts "cookie:#{cookie}"
+}
+
+print "end"
+#+END_EXAMPLE
+**** useful link
+http://ruby-doc.org/stdlib/libdoc/net/http/rdoc/classes/Net/HTTP.html\\
+Net::HTTP
+http://ruby-doc.org/stdlib/libdoc/net/http/rdoc/index.html\\
+net/http: Ruby Standard Library Documentation
+http://snippets.dzone.com/posts/show/788\\
+Custom HTTP/HTTPS GET/POST queries in Ruby
+** json
+  CLOSED: [2014-06-21 Sat 09:00]
+http://stackoverflow.com/questions/5410682/parsing-a-json-string-in-ruby
+
+require 'rubygems'
+require 'json'
+string="{\"name\": \"name_of_API_client\", \"admin\": false}"
+object=JSON.parse(string)
+** DONE regexp match
+   CLOSED: [2014-06-23 Mon 11:51]
+http://docs.opscode.com/just_enough_ruby_for_chef.html
+#+begin_src ruby
+Use Perl-style regular expressions:
+
+"I believe"  =~ /I/                       # => 0 (matches at the first character)
+"I believe"  =~ /lie/                     # => 4 (matches at the 5th character)
+"I am human" =~ /bacon/                   # => nil (no match - bacon comes from pigs)
+"I am human" !~ /bacon/                   # => true (correct, no bacon here)
+/give me a ([0-9]+)/ =~ "give me a 7"     # => 0 (matched)
+#+end_src
+** DONE exception in ruby
+   CLOSED: [2010-02-07 星期日 10:18]
+*** basic use
+#+BEGIN_EXAMPLE
+#!/usr/bin/ruby
+begin
+    input = File.new("/etc/resolv.conf", "r")
+rescue
+    print "Failed to open /etc/fstab for input. ", $!, "\n"
+end
+input.each {
+    |i|
+    puts i;
+    }
+    input.close()
+#+END_EXAMPLE
+*** useful link
+http://rubylearning.com/satishtalim/ruby_exceptions.html\\
+Ruby Exceptions: Ruby Study Notes
+http://www.troubleshooters.com/codecorn/ruby/basictutorial.htm\\
+Ruby Basic Tutorial
+** DONE source code install ruby
+  CLOSED: [2013-07-12 Fri 18:36]
+wget ftp://ftp.ruby-lang.org/pub/ruby/2.0/ruby-2.0.0-p247.tar.gz
+
+tar -xf ruby-2.0.0-p247.tar.gz
+
+cd  ruby-2.0.0-p247
+
+./configure
+
+make
+
+make install
+mv /usr/bin/ruby /usr/bin/ruby.bak
+ln -s /usr/local/bin/ruby /usr/bin/ruby
+** DONE ruby中使用源程序当前位置：require File.dirname(__FILE__) + '/../a' :IMPORTANT:
+    CLOSED: [2010-02-07 星期日 01:28]
+知道了, ruby源代码中使用的当前位置是指程序运行的当前位置,而不是通常意义上说的源文件所在的位置。
+
+需要将require '/../a'改为 require File.dirname(__FILE__) + '/../a'
+** # --8<-------------------------- separator ------------------------>8--
+** TODO get paramter
+http://snipplr.com/view/6335/ruby-command-line-option-parser/\\
+** TODO Send parameter by reference
+** TODO Get input para
+** TODO virtual function of class
+** TODO constant variable of class
+** TODO Invoke parent's function
+** ;; -------------------------- separator --------------------------
+** TODO What's the problem the following Ruby code to talk with HTTP server
+require 'net/https'
+require 'net/http'
+require 'openssl'
+
+puts "hello"
+https = Net::HTTP.new('10.32.173.154', 443)
+https.use_ssl = true
+https.verify_mode = OpenSSL::SSL::VERIFY_NONE
+request = Net::HTTP::Post.new('/mgmt_login/verify')
+request.body = 'auth_type=local&auth_addr=&username=MauiAdmin&password=password'
+request['Content-Length'] = request.body.length()
+request['ACCEPT'] = 'application/xml'
+cookie = ''
+result = https.start{ |http|
+  response, data = http.request(request)
+  puts "response:#{response}, data:#{data}"
+  cookie = response['set-cookie']
+  cookie = cookie.slice(/_gui_session_id=\w*/)
+}
+puts "cookie:#{cookie}"
+
+http = Net::HTTP.new('10.32.173.154', 443)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+data = 'auth_type=local&auth_addr=&username=MauiAdmin&password=password'
+headers = {
+  'Content-Length' => data.length(),
+  'ACCEPT' => 'application/xml'
+}
+puts "here, headers:#{headers}"
+resp, data = http.post('/mgmt_login/verify', data, headers) #denny problem here
+#resp, data = http.get('/mgmt_login/verify', headers) #denny problem here
+puts "resp:#{resp}, data:#{data}"
+cookie = resp.response['set-cookie']
+cookie = cookie.slice(/_gui_session_id=\w*/)
+puts "line 62: cookie:#{cookie}"
+
+print "end"
+** TODO what's duck typing
+** TODO metaclass ?
+** TODO Check if directory exists
+*** useful link
+    http://www.ruby-forum.com/topic/135748\\
+    Check if directory exists
+** TODO ruby script/server webrick与ruby script/server运行有合不同
+** ruby conventions
+ClassNames
+method_names
+variable_names
+methods_asking_a_question
+slightly_dangerous_methods
+@instance_variables
+@@class_variables
+$global_variables
+SOME_CONSTANT
+AnotherConstants
+** rails的ActiveRecord类
+*** basic use
+#+BEGIN_EXAMPLE
+     Active Record objects don‘t specify their attributes directly, but rather infer them from the table definition with which they‘re linked.
+     每个Active Record类对应数据库中的一张表。
+#+END_EXAMPLE
+*** Active Record类与数据库表的name mapping规则
+    class Invoice < ActiveRecord::Base; end;
+    file                  class               table_name
+    invoice.rb            Invoice             invoices
+
+    class Invoice < ActiveRecord::Base; class Lineitem < ActiveRecord::Base; end; end;
+    file                  class               table_name
+    invoice.rb            Invoice::Lineitem   invoice_lineitems
+
+    module Invoice; class Lineitem < ActiveRecord::Base; end; end;
+    file                  class               table_name
+    invoice/lineitem.rb   Invoice::Lineitem   lineitems
+*** query:Conditions
+    Examples:
+    class User < ActiveRecord::Base
+       def self.authenticate_safely(user_name, password)
+         find(:first, :conditions => [ "user_name = ? AND password = ?", user_name, password ])
+       end
+    end
+**** named bind variables
+     When using multiple parameters in the conditions, it can easily become hard to read exactly what the fourth or fifth question mark is supposed to represent. In those cases, you can resort to named bind variables instead. That‘s done by replacing the question marks with symbols and supplying a hash with values for the matching symbol keys:
+     Company.find(:first, :conditions => [
+       "id = :id AND name = :name AND division = :division AND created_at > :accounting_date",
+       { :id => 3, :name => "37signals", :division => "First", :accounting_date => '2005-01-01' }
+     ])
+**** A range may be used in the hash to use the SQL BETWEEN operator:
+     Student.find(:all, :conditions => { :grade => 9..12 })
+**** An array may be used in the hash to use the SQL IN operator:
+     Student.find(:all, :conditions => { :grade => [9,11,12] })
+*** Accessing attributes before they have been typecasted
+    Sometimes you want to be able to read the raw attribute data without having the column-determined typecast run its course first.
+    That can be done by using the <attribute>_before_type_cast accessors that all attributes have.
+    For example, if your Account model has a balance attribute, you can call account.balance_before_type_cast or account.id_before_type_cast.
+*** Dynamic attribute-based finders
+    Dynamic attribute-based finders are a cleaner way of getting (and/or creating) objects by simple queries without turning to SQL.
+    They work by appending the name of an attribute to find_by_, find_last_by_, or find_all_by_.
+    So instead of writing Person.find(:first, :conditions => ["user_name = ?", user_name]), you just do Person.find_by_user_name(user_name).
+    It‘s also possible to use multiple attributes in the same find by separating them with "and", so you get finders like Person.find_by_user_name_and_password or even Payment.find_by_purchaser_and_state_and_country.
+*** find_or_create_by_
+    find_or_create_by_ will return the object if it already exists and otherwise creates it, then returns it.
+    For example:
+
+ # No 'Summer' tag exists
+ Tag.find_or_create_by_name("Summer") # equal to Tag.create(:name => "Summer")
+
+ # Now the 'Summer' tag does exist
+ Tag.find_or_create_by_name("Summer") # equal to Tag.find_by_name("Summer")
+
+ # Now 'Bob' exist and is an 'admin'
+ User.find_or_create_by_name('Bob', :age => 40) { |u| u.admin = true }
+*** find_or_initialize_by_
+Use the find_or_initialize_by_ finder if you want to return a new record without saving it first. Protected attributes won‘t be set unless they are given in a block. For example:
+
+  # No 'Winter' tag exists
+  winter = Tag.find_or_initialize_by_name("Winter")
+  winter.new_record? # true
+*** useful link
+    http://api.rubyonrails.org/classes/ActiveRecord/Base.html\\
+    ActiveRecord::Base
+** DONE Setting a string variable with a mult-line text value
+   CLOSED: [2010-02-07 星期日 10:23]
+*** basic use
+#+BEGIN_EXAMPLE
+myString = <<END_OF_STRING + "one more line\n"
+This is multiline string, similar to double-quoted
+string, but it always ends with a newline
+END_OF_STRING
+#+END_EXAMPLE
+*** useful link
+http://snippets.dzone.com/posts/show/4956\\
+Setting a string variable with a mult-line text value
+** DONE main function in ruby
+   CLOSED: [2010-02-07 星期日 10:15]
+*** basic use
+#+BEGIN_EXAMPLE
+if __FILE__ == $0
+  # Main function, if it's called directly
+  upgradecli_instance = UpgradeCLI.new()
+  upgradecli_instance.do_work()
+end
+#+END_EXAMPLE
+*** useful link
+http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/3431\\
+ There is no "main" function in Ruby (?)
+** DONE TypeError (can't convert nil into String)
+   p "password is: " + password + "."
+   改成
+   p ", password is: "+ password +"." unless password.nil?
+** DONE 数字本身有它自己的迭代器times: 6.times {|i| p i }
+   CLOSED: [2010-03-06 星期六 02:13]
+** DONE 在字符串中引用实例变量: " hello, #＠name"
+   CLOSED: [2010-03-06 星期六 02:11]
+** DONE RoR dump object                                           :IMPORTANT:
+   CLOSED: [2010-07-25 星期日 01:31]
+In views: DebugHelper’s debug(object)
+In controllers, models, and other code: puts YAML::dump(object)
+*** useful link
+http://stackoverflow.com/questions/904314/is-there-a-print-r-or-var-dump-equivalent-in-ruby-ruby-on-rails\\
+Is there a print_r or var_dump equivalent in Ruby / Ruby on Rails?
+http://weblog.bitlasoft.com/2010/05/ruby-on-rails-serializing-and-deserializing-ruby-objects/\\
+Ruby on Rails: Serializing and DeSerializing Ruby objects
+** DONE [#A] RoR连接多个的DB                                      :IMPORTANT:
+   CLOSED: [2011-08-09 Tue 17:34]
+- setting up class-specific connections
+- app/controllers/abstract_application.rb defines a class called AbstractApplicationController.
+** DONE [#A] ruby: html得到当前http的链接: request.url            :IMPORTANT:
+   CLOSED: [2011-08-09 Tue 20:15]
+       <span class="accesskey">#</span> <a href="<% request.url %>/mobile/accountremain" accesskey="1">账户余额</a><br />
+** DONE Ruby: NoMethodError (undefined method `to_f=' for "0":String):
+  CLOSED: [2011-08-09 Tue 20:15]
+显示将变量类型转化为0.0, 然后再做转化
+** DONE Ruby: Hash没有from_xml方法, 这是ActiveSupport添加进来的
+  CLOSED: [2011-08-10 Wed 11:08]
+,-----------
+| ./1.rb:21: undefined method `from_xml' for Hash:Class (NoMethodError)
+`-----------
+
+from_xml() method is added by ActiveSupport, not by Ruby
+** DONE ruby query on-line document of a module: help(Chef)
+   CLOSED: [2014-06-21 Sat 08:15]
+** TODO 单步跟踪的ruby程序
+** TODO [#A] ruby get location of a module
+gem install activesupport
+
+/usr/local/lib/ruby/site_ruby/2.1.0/rubygems/
+/usr/local/lib/ruby/gems/2.1.0/gems
+** useful link
+http://www.troubleshooters.com/codecorn/ruby/basictutorial.htm\\
+Ruby Basic Tutorial
+http://developer.51cto.com/art/200912/169306.htm\\
+深入探讨Ruby与Python语法比较
+http://www.zytrax.com/tech/lang/ruby/\\
+Ruby Stuff
+http://www.ruby-doc.org/docs/ProgrammingRuby/html/builtins.html\\
+Ruby The Pragmatic Programmer's Guide
+http://api.rubyonrails.org/\\
+Rails Framework Documentation
+rails read me
+http://api.rubyonrails.org/files/README.html\\
+** ruby yaml configuration
+http://stackoverflow.com/questions/21422494/reading-and-updating-yaml-file-by-ruby-code
+http://innovativethought.net/2007/07/25/making-configuration-files-with-yaml/
+*** DONE sample
+   CLOSED: [2014-08-08 Fri 14:29]
+ruby
+require 'yaml'
+config = YAML.load_file("/Users/mac/test.yaml")
+config["recipe_assignment"]["node1.totvs.com"]
+config["node_reconfig"]
+**** test.yaml
+#+begin_example
+node_list:
+   hostame_list: "node1.totvs.com,node2.totvs.com,node3.totvs.com"
+
+global_env:
+   # package version. If unset, the latest version will be installed
+  adsync_version: "123.23"
+  rmi_version: "123.23"
+
+recipe_assignment:
+  "node1.totvs.com": "cookbook1,cookbook2"
+  "node2.totvs.com": "cookbook2,cookbook3"
+  "node3.totvs.com": "cookbook2,cookbook3"
+
+node_reconfig:
+  "node1.totvs.com":
+     "adsync_port": "12381"
+
+  "node2.totvs.com":
+     "rmi_port": "12382"
+#+end_example
+** DONE ruby string place holder
+  CLOSED: [2015-06-29 Mon 22:29]
+http://stackoverflow.com/questions/554666/ruby-merging-variables-in-to-a-string
+#+BEGIN_EXAMPLE
+You can use sprintf-like formatting to inject values into the string. For that the string must include placeholders. Put your arguments into an array and use on of these ways: (For more info look at the documentation for Kernel::sprintf.)
+
+fmt = 'The %s %s the %s'
+res = fmt % [animal, action, other_animal]  # using %-operator
+res = sprintf(fmt, animal, action, other_animal)  # call Kernel.sprintf
+You can even explicitly specify the argument number and shuffle them around:
+
+'The %3$s %2$s the %1$s' % ['cat', 'eats', 'mouse']
+Or specify the argument using hash keys:
+
+'The %{animal} %{action} the %{second_animal}' %
+  {animal: 'cat', action: 'eats', second_animal: 'mouse'}
+#+END_EXAMPLE
+** DONE ruby get eth0 ip
+  CLOSED: [2015-07-12 Sun 10:02]
+https://coderrr.wordpress.com/2008/05/28/get-your-local-ip-address/
+
+http://stackoverflow.com/questions/2452060/ruby-platform-independent-way-to-determine-ips-of-all-network-interfaces
+
+1. ifconfig
+
+2. ruby
+#+BEGIN_SRC ruby
+require 'socket'
+
+def local_ip
+  orig, Socket.do_not_reverse_lookup = Socket.do_not_reverse_lookup, true  # turn off reverse DNS resolution temporarily
+
+  UDPSocket.open do |s|
+    s.connect '8.8.8.8', 1
+    s.addr.last
+  end
+ensure
+  Socket.do_not_reverse_lookup = orig
+end
+
+# irb:0> local_ip
+# => "192.168.0.127"
+#+END_SRC
+** DONE ubuntu 12.04 install ruby 2.0
+  CLOSED: [2015-02-26 Thu 23:55]
+http://stackoverflow.com/questions/16222738/how-do-i-install-ruby-2-0-0-correctly-on-ubuntu-12-04
+https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-on-ubuntu-12-04-lts-precise-pangolin-with-rvm
+
+sudo apt-get -y update
+sudo apt-get -y install build-essential zlib1g-dev libssl-dev libreadline6-dev libyaml-dev
+cd /tmp
+wget http://cache.ruby-lang.org/pub/ruby/2.0/ruby-2.0.0-p481.tar.gz
+# wget http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.1.tar.gz
+tar -xvzf ruby-2.0.0-p481.tar.gz
+cd ruby-2.0.0-p481/
+./configure --prefix=/usr/local
+make
+sudo make install
+** ubuntu install ruby2.2
+apt-get -yqq install python-software-properties && \
+apt-add-repository ppa:brightbox/ruby-ng && \
+apt-get -yqq update && \
+apt-get -yqq install ruby2.2 ruby2.2-dev && \
+rm -rf /usr/bin/ruby && \
+ln -s /usr/bin/ruby2.2 /usr/bin/ruby && \
+rm -rf /usr/local/bin/ruby /usr/local/bin/gem /usr/local/bin/bundle
+** DONE Install ruby 1.9+
+  CLOSED: [2015-02-28 Sat 13:52]
+https://leonard.io/blog/2012/05/installing-ruby-1-9-3-on-ubuntu-12-04-precise-pengolin/
+ruby --version
+apt-get install -y rubygems
+
+gem --version
+** DONE ubuntu 12.04 install ruby 1.9
+  CLOSED: [2015-02-26 Thu 23:29]
+https://leonard.io/blog/2012/05/installing-ruby-1-9-3-on-ubuntu-12-04-precise-pengolin/
+
+sudo apt-get update
+
+sudo apt-get install ruby1.9.1 ruby1.9.1-dev \
+  rubygems1.9.1 irb1.9.1 ri1.9.1 rdoc1.9.1 \
+  build-essential libopenssl-ruby1.9.1 libssl-dev zlib1g-dev
+
+sudo update-alternatives --install /usr/bin/ruby ruby /usr/bin/ruby1.9.1 400 \
+         --slave   /usr/share/man/man1/ruby.1.gz ruby.1.gz \
+                        /usr/share/man/man1/ruby1.9.1.1.gz \
+        --slave   /usr/bin/ri ri /usr/bin/ri1.9.1 \
+        --slave   /usr/bin/irb irb /usr/bin/irb1.9.1 \
+        --slave   /usr/bin/rdoc rdoc /usr/bin/rdoc1.9.1
+
+# choose your interpreter
+# changes symlinks for /usr/bin/ruby , /usr/bin/gem
+# /usr/bin/irb, /usr/bin/ri and man (1) ruby
+sudo update-alternatives --config ruby
+sudo update-alternatives --config gem
+
+# now try
+ruby --version
+** DONE ruby %W与%w的区别
+  CLOSED: [2016-01-06 Wed 11:19]
+root@jayx:~# irb
+irb(main):002:0> foo="abc"
+=> "abc"
+irb(main):003:0> %W(#{foo} Bar Bar\ with\ space)
+=> ["abc", "Bar", "Bar with space"]
+irb(main):004:0>
+
+https://ruby-china.org/topics/18512
+%W
+语法近似于%Q, 用于表示其中元素被双引号括起的数组.
+%W(#{foo} Bar Bar\ with\ space)
+=> ["Foo", "Bar", "Bar with space"]
+
+%w
+用于表示其中元素被单引号括起的数组. 比较奇怪的是\(斜杠空格)会被转化成(空格), 但是其他的内容不会.
+%w(a b c\ d \#e #{1}f)
+=> ["a", "b", "c d", "\\#e", "\#{1}f"]
+** DONE ruby check whether a variable is string or list: s.kind_of?(Array)
+  CLOSED: [2016-01-21 Thu 16:23]
+http://stackoverflow.com/questions/1527888/ruby-test-for-array
+** DONE ruby get current hostname
+  CLOSED: [2016-02-20 Sat 08:31]
+require 'socket'
+hostname=Socket.gethostname
+puts hostname
+** DONE erb if... else...
+  CLOSED: [2014-10-21 Tue 13:06]
+http://stackoverflow.com/questions/6932663/whats-wrong-with-my-simple-if-else
+#+begin_example
+<% if 1 > 2 %>
+<% "helllloooo" %>  #option 1 to display dynamic data
+<% else %>
+nada                 #option 2 to display static data
+<% end %>
+#+end_example
+** DONE ruby run bash command: stdin, stdout, stderr = Open3.popen3('ls .')
+  CLOSED: [2016-04-11 Mon 09:46]
+http://mentalized.net/journal/2010/03/08/5-ways-to-run-commands-from-ruby/
+http://blog.honeybadger.io/capturing-stdout-stderr-from-shell-commands-via-ruby/
+#+BEGIN_EXAMPLE
+➜  chef_changereport_handler git:(master) ✗ irb
+irb
+irb(main):001:0> require 'open3'
+require 'open3'
+=> true
+irb(main):002:0> stdin, stdout, stderr = Open3.popen3('ls .')
+stdin, stdout, stderr = Open3.popen3('ls .')
+=> [#<IO:fd 9>, #<IO:fd 10>, #<IO:fd 12>, #<Thread:0x007ffe2abba960 sleep>]
+irb(main):003:0> stdout.readlines
+stdout.readlines
+=> ["Berksfile\n", "Berksfile.lock\n", "Gemfile\n", "README.md\n", "attributes\n", "metadata.rb\n", "recipes\n", "templates\n", "test\n"]
+irb(main):004:0> stderr.readlines
+stderr.readlines
+=> []
+#+END_EXAMPLE
+** #  --8<-------------------------- separator ------------------------>8--
+** DONE ruby check whether string is valid ip address
+  CLOSED: [2016-12-23 Fri 20:34]
+http://stackoverflow.com/questions/23126073/regular-expression-to-validate-ipv4-address-in-ruby
+
+block = /\d{,2}|1\d{2}|2[0-4]\d|25[0-5]/
+re = /\A#{block}\.#{block}\.#{block}\.#{block}\z/
+
+re =~ "255.255.255.255" # => 0
+re =~ "255.255.255.256" # => nil
+
+** TODO ruby prameter check library
+http://stackoverflow.com/questions/12909718/best-ruby-library-to-validate-request-parameters
+
+** DONE ruby continue loop: use next
+  CLOSED: [2017-01-06 Fri 11:28]
+http://stackoverflow.com/questions/4230322/in-ruby-how-do-i-skip-a-loop-in-a-each-loop-similar-to-continue
+(1..10).each do |a|
+  next if a.even?
+  puts a
+end
+
+** DONE ruby get ip from hostname
+  CLOSED: [2017-05-24 Wed 18:53]
+https://stackoverflow.com/questions/42308669/getting-ip-address-from-hostnames-in-ruby
+require "resolv"
+
+server_names.each do |name|
+  address = Resolv.getaddress(name)
+  puts address
+end
