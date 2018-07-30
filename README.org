@@ -33,7 +33,7 @@ See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][
 |---------------------------------------+------------------------------------------------|
 | Check syntax                          | =ruby -c my.rb=                                |
 | Generate random key                   | =r = Random.new, r.rand(10...42)=              |
-| Install package with specific version | =gem install rubocop -v "0.44.1"=              |
+| Install package with specific version | gem install rubocop -v "0.44.1"                |
 | Get RubyGem env                       | =gem env=                                      |
 | Check whether variable is nil         | =if value.nil?=                                |
 | Run system command                    | =system("commandhere")=                        |
@@ -43,7 +43,7 @@ See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][
 
 | Name                     | Comment                                 |
 |--------------------------+-----------------------------------------|
-| Check existence          | =['Cat', 'Dog', 'Bird'].include? 'Dog'= |
+| Check existence          | ['Cat', 'Dog', 'Bird'].include? 'Dog'   |
 | Find item                | =l1.find_index(x)=                      |
 | Remove item from list    | =l1.delete_at(2)=                       |
 | Remove duplicate entries | =[1,2,2,1,4,4,5,6,7,8,5,6].uniq=        |
@@ -54,9 +54,9 @@ See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][
 | Name                  | Comment                                            |
 |-----------------------+----------------------------------------------------|
 | Substring             | =string[1..3]=                                     |
-| Search substring      | ="option=name=bob".index("name")=                  |
-| Replace               | ="Welcome to PHP Essentials!".gsub("PHP", "Ruby")= |
-| Remove trailing comma | ="ab;123;".chomp(";")=                             |
+| Search substring      | "option=name=bob".index("name")                    |
+| Replace               | "Welcome to PHP Essentials!".gsub("PHP", "Ruby")   |
+| Remove trailing comma | "ab;123;".chomp(";")                               |
 | Strip whitespace      | =host = host.strip()=                              |
 
 ** Integer
@@ -69,7 +69,7 @@ See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][
 
 | Name                    | Comment                                   |
 |-------------------------+-------------------------------------------|
-| Convert string to int   | ="1,112".delete(',').to_i=                |
+| Convert string to int   | "1,112".delete(',').to_i                  |
 | Round float to 2 digits | =(5.65235534).round(2)=                   |
 | Format datetime         | =puts time.strftime("%Y-%m-%d %H:%M:%S")= |
 
