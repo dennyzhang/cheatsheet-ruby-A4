@@ -6,15 +6,18 @@
 Blog URL: https://cheatsheet.dennyzhang.com/cheatsheet-ruby, Category: [[https://cheatsheet.dennyzhang.com/category/languages][languages]]
 
 #+BEGIN_HTML
-<a href="https://www.linkedin.com/in/dennyzhang001"><img src="https://www.dennyzhang.com/wp-content/uploads/sns/linkedin.png" alt="linkedin" /></a>
-<a href="https://github.com/dennyzhang"><img src="https://www.dennyzhang.com/wp-content/uploads/sns/github.png" alt="github" /></a>
-<a href="https://www.dennyzhang.com/slack" target="_blank" rel="nofollow"><img src="https://slack.dennyzhang.com/badge.svg" alt="slack"/></a>
+<div id="the whole thing" style="overflow: hidden;">
+<div style="float: left; padding: 5px"> <a href="https://www.linkedin.com/in/dennyzhang001"><img src="https://www.dennyzhang.com/wp-content/uploads/sns/linkedin.png" alt="linkedin" /></a></div>
+<div style="float: left; padding: 5px"><a href="https://github.com/dennyzhang"><img src="https://www.dennyzhang.com/wp-content/uploads/sns/github.png" alt="github" /></a></div>
+<div style="float: left; padding: 5px"><a href="https://www.dennyzhang.com/slack" target="_blank" rel="nofollow"><img src="https://slack.dennyzhang.com/badge.svg" alt="slack"/></a></div>
+</div>
+
 <a href="https://github.com/dennyzhang/cheatsheet-ruby-A4"><img align="right" width="200" height="183" src="https://www.dennyzhang.com/wp-content/uploads/denny/watermark/github.png" /></a>
 
 <br/><br/>
-
 <a href="http://makeapullrequest.com" target="_blank" rel="nofollow"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome"/></a>
 #+END_HTML
+
 File me [[https://github.com/dennyzhang/cheatsheet-ruby-A4/issues][Issues]] or star [[https://github.com/DennyZhang/cheatsheet-ruby-A4][this repo]].
 
 See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][#denny-cheatsheets]]
@@ -59,7 +62,7 @@ See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][
 
 | Name                    | Comment                                   |
 |-------------------------+-------------------------------------------|
-| Convert string to int   | "1,112".delete(',').to_i                  |
+| Convert string to int   | "14".to_i, "1,112".delete(',').to_i       |
 | Round float to 2 digits | =(5.65235534).round(2)=                   |
 | Format datetime         | =puts time.strftime("%Y-%m-%d %H:%M:%S")= |
 
@@ -142,6 +145,293 @@ end
 #+SEQ_TODO: TODO HALF ASSIGN | DONE BYPASS DELEGATE CANCELED DEFERRED
 #+LINK_UP:   
 #+LINK_HOME: 
+* RubyGem                                                          :noexport:
+http://guides.rubygems.org/rubygems-basics/
+| Name                                  | Summary                                                             |
+|---------------------------------------+---------------------------------------------------------------------|
+| gem install bundler -v 1.10.2         |                                                                     |
+| gem uninstall bundler -v 1.10.6       |                                                                     |
+|---------------------------------------+---------------------------------------------------------------------|
+| Psych.method(:parser).source_location | get module file location                                            |
+| $LOAD_PATH                            |                                                                     |
+| YAML.ancestors                        |                                                                     |
+|---------------------------------------+---------------------------------------------------------------------|
+| gem server                            | access this documentation at http://localhost:8808                  |
+| gem env                               |                                                                     |
+| gem list                              |                                                                     |
+| where to find gem                     | /Library/Ruby/Gems/2.0.0/specifications/default/psych-2.0.0.gemspec |
+** DONE gem env
+   CLOSED: [2015-02-28 Sat 22:53]
+
+#+BEGIN_EXAMPLE
+macs-MacBook-Air:fluig-cluster mac$ gem env
+RubyGems Environment:
+  - RUBYGEMS VERSION: 2.4.5
+  - RUBY VERSION: 2.0.0 (2014-05-08 patchlevel 481) [universal.x86_64-darwin13]
+  - INSTALLATION DIRECTORY: /Library/Ruby/Gems/2.0.0
+  - RUBY EXECUTABLE: /System/Library/Frameworks/Ruby.framework/Versions/2.0/usr/bin/ruby
+  - EXECUTABLE DIRECTORY: /usr/bin
+  - SPEC CACHE DIRECTORY: /Users/mac/.gem/specs
+  - SYSTEM CONFIGURATION DIRECTORY: /Library/Ruby/Site
+  - RUBYGEMS PLATFORMS:
+    - ruby
+    - universal-darwin-13
+  - GEM PATHS:
+     - /Library/Ruby/Gems/2.0.0
+     - /Users/mac/.gem/ruby/2.0.0
+     - /System/Library/Frameworks/Ruby.framework/Versions/2.0/usr/lib/ruby/gems/2.0.0
+  - GEM CONFIGURATION:
+     - :update_sources => true
+     - :verbose => true
+     - :backtrace => false
+     - :bulk_threshold => 1000
+  - REMOTE SOURCES:
+     - https://rubygems.org/
+  - SHELL PATH:
+     - /usr/bin
+     - /bin
+     - /usr/sbin
+     - /sbin
+     - /usr/local/bin
+     - /opt/local/bin/
+macs-MacBook-Air:fluig-cluster mac$
+#+END_EXAMPLE
+** DONE gem search all possible verison: sudo gem search kitchen-vagrant
+   CLOSED: [2015-03-03 Tue 10:24]
+** DONE [#A] bundle: manage ruby packaged dependencies: sudo gem install bundler
+   CLOSED: [2015-02-02 Mon 16:55]
+http://bundler.io
+*** ubuntu install gem bundle:
+sudo apt-get install rubygems build-essential
+gem install bundle
+*** mac install bundle: sudo gem install bundler
+#+BEGIN_EXAMPLE
+Getting Started
+
+Getting started with bundler is easy! Open a terminal window and run this command:
+$ gem install bundler
+Specify your dependencies in a Gemfile in your project's root:
+source 'https://rubygems.org'
+gem 'nokogiri'
+gem 'rack', '~>1.1'
+gem 'rspec', :require => 'spec'
+#+END_EXAMPLE
+** DONE [#A] Ruby gem where is psych: 2.0.0?                      :IMPORTANT:
+   CLOSED: [2015-03-07 Sat 12:24]
+ls -lth /Library/Ruby/Gems/2.0.0/specifications/default/psych-2.0.0.gemspec
+
+#+BEGIN_EXAMPLE
+macs-air:puppet-kitchen-example mac$ gem list | grep psych
+gem list | grep psych
+psych (2.0.13, 2.0.0)
+
+macs-air:puppet-kitchen-example mac$ ls -lth /Library/Ruby/Gems/2.0.0/gems | grep psych
+ls -lth /Library/Ruby/Gems/2.0.0/gems | grep psych
+drwxr-xr-x  12 root  wheel   408B Mar  7 12:04 psych-2.0.13
+macs-air:puppet-kitchen-example mac$
+
+  /Library/Ruby/Gems/2.0.0/:
+  find . \( -iname psych-2.0\* \) -ls
+  8809744        8 -rwxr-xr-x    1 root             wheel                   1 Feb 24 08:42 build_info/psych-2.0.13.info
+  8809456      256 -rwxr-xr-x    1 mac              staff              127488 Feb 24 08:42 cache/psych-2.0.13.gem
+  9737887        0 drwxr-xr-x    3 root             wheel                 102 Mar  7 12:02 doc/psych-2.0.13
+  8809745        0 drwxr-xr-x    6 root             wheel                 204 Mar  7 12:04 extensions/universal-darwin-13/2.0.0/psych-2.0.13
+  9738259        0 drwxr-xr-x   12 root             wheel                 408 Mar  7 12:04 gems/psych-2.0.13
+  302588        0 -rwxr-xr-x    1 root             wheel                4837 Jun 28  2014 specifications/default/psych-2.0.0.gemspec
+  9738521        8 -rw-r--r--    1 root             wheel                2041 Mar  7 12:04 specifications/psych-2.0.13.gemspec
+
+  find finished at Sat Mar  7 12:07:46
+#+END_EXAMPLE
+** DONE wrong version of Psych version
+   CLOSED: [2015-03-07 Sat 16:00]
+It try to load psych 2.0.0 by default, however it doesn't exist
+#+BEGIN_EXAMPLE
+macs-air:puppet-kitchen-example mac$ gem list | grep psych
+gem list | grep psych
+psych (2.0.13, 2.0.0)
+#+END_EXAMPLE
+*** HALF librarian-puppet install fail: undefined method `load_file' for Psych:Module (NoMethodError)
+https://github.com/sferik/t/issues/258
+#+BEGIN_EXAMPLE
+macs-air:puppet-kitchen-example mac$ librarian-puppet install
+librarian-puppet install
+/Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/config/file_source.rb:27:in `load': undefined method `load_file' for Psych:Module (NoMethodError)
+	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/config/source.rb:60:in `load!'
+	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/config/source.rb:40:in `[]='
+	from /Library/Ruby/Gems/2.0.0/gems/librarian-puppet-2.1.0/lib/librarian/puppet/cli.rb:55:in `install'
+	from /Library/Ruby/Gems/2.0.0/gems/thor-0.19.1/lib/thor/command.rb:27:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in `invoke_command'
+	from /Library/Ruby/Gems/2.0.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+	from /Library/Ruby/Gems/2.0.0/gems/thor-0.19.1/lib/thor/base.rb:440:in `start'
+	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/cli.rb:26:in `block (2 levels) in bin!'
+	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/cli.rb:31:in `returning_status'
+	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/cli.rb:26:in `block in bin!'
+	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/cli.rb:47:in `with_environment'
+	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/cli.rb:26:in `bin!'
+	from /Library/Ruby/Gems/2.0.0/gems/librarian-puppet-2.1.0/bin/librarian-puppet:7:in `<top (required)>'
+	from /usr/bin/librarian-puppet:23:in `load'
+	from /usr/bin/librarian-puppet:23:in `<main>'
+#+END_EXAMPLE
+*** HALF librarian-puppet install fail: undefined method `dump' for Psych:Module (NoMethodError)
+https://github.com/rubinius/rubinius/issues/2913
+https://github.com/rubinius/rubinius/issues/2919
+
+#+BEGIN_EXAMPLE
+macs-air:puppet-kitchen-example mac$ macs-air:puppet-kitchen-example mac$ librarian-puppet install
+librarian-puppet install
+/Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/config/file_source.rb:41:in `block in save': undefined method `dump' for Psych:Module (NoMethodError)
+	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/config/file_source.rb:41:in `open'
+	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/config/file_source.rb:41:in `save'
+	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/config/source.rb:46:in `[]='
+	from /Library/Ruby/Gems/2.0.0/gems/librarian-puppet-2.1.0/lib/librarian/puppet/cli.rb:55:in `install'
+	from /Library/Ruby/Gems/2.0.0/gems/thor-0.19.1/lib/thor/command.rb:27:in `run'
+	from /Library/Ruby/Gems/2.0.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in `invoke_command'
+	from /Library/Ruby/Gems/2.0.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+	from /Library/Ruby/Gems/2.0.0/gems/thor-0.19.1/lib/thor/base.rb:440:in `start'
+	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/cli.rb:26:in `block (2 levels) in bin!'
+	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/cli.rb:31:in `returning_status'
+	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/cli.rb:26:in `block in bin!'
+	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/cli.rb:47:in `with_environment'
+	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/cli.rb:26:in `bin!'
+	from /Library/Ruby/Gems/2.0.0/gems/librarian-puppet-2.1.0/bin/librarian-puppet:7:in `<top (required)>'
+	from /usr/bin/librarian-puppet:23:in `load'
+	from /usr/bin/librarian-puppet:23:in `<main>'
+#+END_EXAMPLE
+** DONE sudo gem list bundle
+   CLOSED: [2015-08-17 Mon 20:30]
+** TODO aliyun ruby gem is not available
+#+BEGIN_EXAMPLE
+-----> Running serverspec test suite
+-----> Installing Serverspec..
+       Fetching: sfl-2.2.gem
+Fetching: sfl-2.2.gem (100%)
+Fetching: sfl-2.2.gem (100%)
+       /opt/chef/embedded/lib/ruby/site_ruby/2.1.0/rubygems/remote_fetcher.rb:249:in `fetch_http': bad response Service Unavailable 503 (https://rubygems-china.oss.aliyuncs.com/quick/Marshal.4.8/net-telnet-0.1.1.gemspec.rz) (Gem::RemoteFetcher::FetchError)
+       	from /opt/chef/embedded/lib/ruby/site_ruby/2.1.0/rubygems/remote_fetcher.rb:247:in `fetch_http'
+       	from /opt/chef/embedded/lib/ruby/site_ruby/2.1.0/rubygems/remote_fetcher.rb:267:in `fetch_path'
+       	from /opt/chef/embedded/lib/ruby/site_ruby/2.1.0/rubygems/source.rb:148:in `fetch_spec'
+       from /opt/chef/embedded/lib/ruby/site_ruby/2.1.0/rubygems/resolver/api_specification.rb:76:in `spec'
+       	from /opt/chef/embedded/lib/ruby/site_ruby/2.1.0/rubygems/resolver/activation_request.rb:74:in `full_spec'
+       	from /opt/chef/embedded/lib/ruby/site_ruby/2.1.0/rubygems/resolver/activation_request.rb:104:in `installed?'
+       	from /opt/chef/embedded/lib/ruby/site_ruby/2.1.0/rubygems/request_set.rb:151:in `block in install'
+       	from /opt/chef/embedded/lib/ruby/site_ruby/2.1.0/rubygems/request_set.rb:150:in `each'
+       	from /opt/chef/embedded/lib/ruby/site_ruby/2.1.0/rubygems/request_set.rb:150:in `install'
+       	from /opt/chef/embedded/lib/ruby/site_ruby/2.1.0/rubygems/dependency_installer.rb:394:in `install'
+       	from /tmp/verifier/gems/gems/busser-0.7.1/lib/busser/rubygems.rb:44:in `install_gem'
+
+       	from /tmp/verifier/gems/gems/busser-serverspec-0.5.7/lib/busser/runner_plugin/serverspec.rb:60:in `install_serverspec'
+       	from /tmp/verifier/gems/gems/busser-serverspec-0.5.7/lib/busser/runner_plugin/serverspec.rb:33:in `test'
+       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/command.rb:27:in `run'
+       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/invocation.rb:126:in `invoke_command'
+       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/invocation.rb:133:in `block in invoke_all'
+       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/invocation.rb:133:in `each'
+       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/invocation.rb:133:in `map'
+       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/invocation.rb:133:in `invoke_all'
+       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/group.rb:232:in `dispatch'
+       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/invocation.rb:115:in `invoke'
+
+       	from /tmp/verifier/gems/gems/busser-0.7.1/lib/busser/command/test.rb:35:in `each'
+       	from /tmp/verifier/gems/gems/busser-0.7.1/lib/busser/command/test.rb:35:in `perform'
+       from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/command.rb:27:in `run'
+       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/invocation.rb:126:in `invoke_command'
+       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/invocation.rb:133:in `block in invoke_all'
+       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/invocation.rb:133:in `each'
+       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/invocation.rb:133:in `map'
+       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/invocation.rb:133:in `invoke_all'
+       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/group.rb:232:in `dispatch'
+       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/invocation.rb:115:in `invoke'
+       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor.rb:40:in `block in register'
+       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/command.rb:27:in `run'
+       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/invocation.rb:126:in `invoke_command'
+       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor.rb:359:in `dispatch'
+       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/base.rb:440:in `start'
+       	from /tmp/verifier/gems/gems/busser-0.7.1/bin/busser:8:in `<top (required)>'
+       	from /tmp/verifier/gems/bin/busser:23:in `load'
+       	from /tmp/verifier/gems/bin/busser:23:in `<main>'
+>>>>>> Verify failed on instance <default-ubuntu-1404>.
+>>>>>> Please see .kitchen/logs/default-ubuntu-1404.log for more details
+>>>>>> ------Exception-------
+>>>>>> Class: Kitchen::ActionFailed
+>>>>>> Message: SSH exited (1) for command: [env http_proxy=http://172.17.42.1:3128 https_proxy=https://172.17.42.1:3128 sh -c '
+http_proxy="http://172.17.42.1:3128"; export http_proxy
+HTTP_PROXY="http://172.17.42.1:3128"; export HTTP_PROXY
+https_proxy="https://172.17.42.1:3128"; export https_proxy
+HTTPS_PROXY="https://172.17.42.1:3128"; export HTTPS_PROXY
+BUSSER_ROOT="/tmp/verifier"; export BUSSER_ROOT
+GEM_HOME="/tmp/verifier/gems"; export GEM_HOME
+GEM_PATH="/tmp/verifier/gems"; export GEM_PATH
+GEM_CACHE="/tmp/verifier/gems/cache"; export GEM_CACHE
+#+END_EXAMPLE
+** TODO gem package location: /var/lib/gems/2.0.0/gems/docker-0.3.1
+** TODO [#B] gem sources add multiple source
+https://github.com/bundler/bundler/issues/3585
+https://github.com/bundler/bundler/issues/3378
+
+gem sources -r https://rubygems.org/ -r http://rubygems.org/  -a https://ruby.taobao.org/
+
+gem sources -l
+
+gem sources -a https://rubygems.org/
+gem sources -a http://rubygems.org/
+** DONE How to make --no-ri --no-rdoc the default for gem install?
+   CLOSED: [2015-03-16 Mon 22:59]
+http://stackoverflow.com/questions/1381725/how-to-make-no-ri-no-rdoc-the-default-for-gem-install
+Just add this line to your ~/.gemrc or /etc/gemrc:
+gem: --no-rdoc --no-ri
+** DONE gem install berkshelf fail: need to install ruby2.2
+   CLOSED: [2016-08-22 Mon 17:41]
+root@bcdd70fb7cdc:/#     gem install berkshelf --no-ri --no-rdoc
+ERROR:  While executing gem ... (Gem::DependencyError)
+    Unable to resolve dependencies: berkshelf requires buff-extensions (~> 1.0); ridley requires buff-extensions (~> 1.0); buff-config requires buff-extensions (~> 1.0); varia_model requires buff-extensions (~> 1.0)
+** DONE gem install without doc: --no-rdoc --no-ri
+   CLOSED: [2017-05-12 Fri 10:17]
+http://stackoverflow.com/questions/1381725/how-to-make-no-ri-no-rdoc-the-default-for-gem-install
+
+Just add this line to your ~/.gemrc or /etc/gemrc:
+gem: --no-rdoc --no-ri
+* HALF ruby render erb                                             :noexport:
+https://idiosyncratic-ruby.com/36-erb-render-standard.html
+https://gist.github.com/bastman/55f1c5a5bb474e472d5e
+http://www.stuartellis.name/articles/erb/
+
+/usr/local/bin/erb authorization-mode=rbac wavefront-api-url=https://try.wavefront.com  ./wavefront-proxy.yml.erb
+
+#+BEGIN_SRC ruby
+require "erb"
+
+def render_erb(template, data = {})
+  render_binding = binding
+  data.each{ |key, value| render_binding.local_variable_set(key.to_sym, value) }
+  ERB.new(template, nil, "%<>").result(render_binding)
+end
+
+example_data = {
+  idiosyncratic: "Ruby"
+}
+
+example_template = <<TEMPLATE
+<%= idiosyncratic %> 3.0
+TEMPLATE
+
+render_erb(example_template, example_data) # => "Ruby 3.0\n"
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+bash-3.2$ /usr/local/bin/erb --help
+print this help
+erb [switches] [var=value...] [inputfile]
+  -x               print ruby script
+  -n               print ruby script with line number
+  -v               enable verbose mode
+  -d               set $DEBUG to true
+  -r library       load a library
+  -S safe_level    set $SAFE (0..1)
+  -E ex[:in]       set default external/internal encodings
+  -U               set default encoding to UTF-8.
+  -T trim_mode     specify trim_mode (0..2, -)
+  -P               ignore lines which start with "%"
+  var=value        set variable
+#+END_EXAMPLE
 * [#A] Ruby                                               :noexport:Personal:
 - gem install/list
 - RVM: Ruby Version Manager
@@ -215,7 +505,7 @@ http://stackoverflow.com/questions/4719272/dictionary-hash\\
     }
 http://www.ruby-doc.org/docs/ProgrammingRuby/html/ref_c_hash.html\\
 *** DONE ruby dictionary
-  CLOSED: [2016-01-21 Thu 16:36]
+    CLOSED: [2016-01-21 Thu 16:36]
 #+BEGIN_SRC ruby
 service_monitor_recipe_dict = {
   "mongodb"=>["common_auth", "nagios_client_mongodb"],
@@ -223,7 +513,7 @@ service_monitor_recipe_dict = {
 #+END_SRC
 ** nil
 ** DONE ruby parse filename string
-  CLOSED: [2016-04-03 Sun 19:23]
+   CLOSED: [2016-04-03 Sun 19:23]
 default['sandbox_test']['docker_image_url'] = 'http://172.17.0.1:8001/totvslabs_mdm_latest.tar.gz'
 
 irb
@@ -489,7 +779,7 @@ tag_name = 'v2'
     Programming Ruby: The Pragmatic Programmer's Guide
 ** logging
 *** DONE simple log: file name, function name, line number
-     CLOSED: [2009-06-26 星期五 11:13]
+    CLOSED: [2009-06-26 星期五 11:13]
   def self.log_header(message)
     call_str = caller.first
     array = call_str.split(":")
@@ -563,7 +853,7 @@ net/http: Ruby Standard Library Documentation
 http://snippets.dzone.com/posts/show/788\\
 Custom HTTP/HTTPS GET/POST queries in Ruby
 ** json
-  CLOSED: [2014-06-21 Sat 09:00]
+   CLOSED: [2014-06-21 Sat 09:00]
 http://stackoverflow.com/questions/5410682/parsing-a-json-string-in-ruby
 
 require 'rubygems'
@@ -604,7 +894,7 @@ Ruby Exceptions: Ruby Study Notes
 http://www.troubleshooters.com/codecorn/ruby/basictutorial.htm\\
 Ruby Basic Tutorial
 ** DONE source code install ruby
-  CLOSED: [2013-07-12 Fri 18:36]
+   CLOSED: [2013-07-12 Fri 18:36]
 wget ftp://ftp.ruby-lang.org/pub/ruby/2.0/ruby-2.0.0-p247.tar.gz
 
 tar -xf ruby-2.0.0-p247.tar.gz
@@ -619,7 +909,7 @@ make install
 mv /usr/bin/ruby /usr/bin/ruby.bak
 ln -s /usr/local/bin/ruby /usr/bin/ruby
 ** DONE ruby中使用源程序当前位置：require File.dirname(__FILE__) + '/../a' :IMPORTANT:
-    CLOSED: [2010-02-07 星期日 01:28]
+   CLOSED: [2010-02-07 星期日 01:28]
 知道了, ruby源代码中使用的当前位置是指程序运行的当前位置,而不是通常意义上说的源文件所在的位置。
 
 需要将require '/../a'改为 require File.dirname(__FILE__) + '/../a'
@@ -804,10 +1094,10 @@ Ruby on Rails: Serializing and DeSerializing Ruby objects
    CLOSED: [2011-08-09 Tue 20:15]
        <span class="accesskey">#</span> <a href="<% request.url %>/mobile/accountremain" accesskey="1">账户余额</a><br />
 ** DONE Ruby: NoMethodError (undefined method `to_f=' for "0":String):
-  CLOSED: [2011-08-09 Tue 20:15]
+   CLOSED: [2011-08-09 Tue 20:15]
 显示将变量类型转化为0.0, 然后再做转化
 ** DONE Ruby: Hash没有from_xml方法, 这是ActiveSupport添加进来的
-  CLOSED: [2011-08-10 Wed 11:08]
+   CLOSED: [2011-08-10 Wed 11:08]
 ,-----------
 | ./1.rb:21: undefined method `from_xml' for Hash:Class (NoMethodError)
 `-----------
@@ -838,7 +1128,7 @@ http://api.rubyonrails.org/files/README.html\\
 http://stackoverflow.com/questions/21422494/reading-and-updating-yaml-file-by-ruby-code
 http://innovativethought.net/2007/07/25/making-configuration-files-with-yaml/
 *** DONE sample
-   CLOSED: [2014-08-08 Fri 14:29]
+    CLOSED: [2014-08-08 Fri 14:29]
 ruby
 require 'yaml'
 config = YAML.load_file("/Users/mac/test.yaml")
@@ -867,7 +1157,7 @@ node_reconfig:
      "rmi_port": "12382"
 #+end_example
 ** DONE ruby string place holder
-  CLOSED: [2015-06-29 Mon 22:29]
+   CLOSED: [2015-06-29 Mon 22:29]
 http://stackoverflow.com/questions/554666/ruby-merging-variables-in-to-a-string
 #+BEGIN_EXAMPLE
 You can use sprintf-like formatting to inject values into the string. For that the string must include placeholders. Put your arguments into an array and use on of these ways: (For more info look at the documentation for Kernel::sprintf.)
@@ -884,7 +1174,7 @@ Or specify the argument using hash keys:
   {animal: 'cat', action: 'eats', second_animal: 'mouse'}
 #+END_EXAMPLE
 ** DONE ruby get eth0 ip
-  CLOSED: [2015-07-12 Sun 10:02]
+   CLOSED: [2015-07-12 Sun 10:02]
 https://coderrr.wordpress.com/2008/05/28/get-your-local-ip-address/
 
 http://stackoverflow.com/questions/2452060/ruby-platform-independent-way-to-determine-ips-of-all-network-interfaces
@@ -910,7 +1200,7 @@ end
 # => "192.168.0.127"
 #+END_SRC
 ** DONE ubuntu 12.04 install ruby 2.0
-  CLOSED: [2015-02-26 Thu 23:55]
+   CLOSED: [2015-02-26 Thu 23:55]
 http://stackoverflow.com/questions/16222738/how-do-i-install-ruby-2-0-0-correctly-on-ubuntu-12-04
 https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-on-ubuntu-12-04-lts-precise-pangolin-with-rvm
 
@@ -933,14 +1223,14 @@ rm -rf /usr/bin/ruby && \
 ln -s /usr/bin/ruby2.2 /usr/bin/ruby && \
 rm -rf /usr/local/bin/ruby /usr/local/bin/gem /usr/local/bin/bundle
 ** DONE Install ruby 1.9+
-  CLOSED: [2015-02-28 Sat 13:52]
+   CLOSED: [2015-02-28 Sat 13:52]
 https://leonard.io/blog/2012/05/installing-ruby-1-9-3-on-ubuntu-12-04-precise-pengolin/
 ruby --version
 apt-get install -y rubygems
 
 gem --version
 ** DONE ubuntu 12.04 install ruby 1.9
-  CLOSED: [2015-02-26 Thu 23:29]
+   CLOSED: [2015-02-26 Thu 23:29]
 https://leonard.io/blog/2012/05/installing-ruby-1-9-3-on-ubuntu-12-04-precise-pengolin/
 
 sudo apt-get update
@@ -965,7 +1255,7 @@ sudo update-alternatives --config gem
 # now try
 ruby --version
 ** DONE ruby %W与%w的区别
-  CLOSED: [2016-01-06 Wed 11:19]
+   CLOSED: [2016-01-06 Wed 11:19]
 root@jayx:~# irb
 irb(main):002:0> foo="abc"
 => "abc"
@@ -984,15 +1274,15 @@ https://ruby-china.org/topics/18512
 %w(a b c\ d \#e #{1}f)
 => ["a", "b", "c d", "\\#e", "\#{1}f"]
 ** DONE ruby check whether a variable is string or list: s.kind_of?(Array)
-  CLOSED: [2016-01-21 Thu 16:23]
+   CLOSED: [2016-01-21 Thu 16:23]
 http://stackoverflow.com/questions/1527888/ruby-test-for-array
 ** DONE ruby get current hostname
-  CLOSED: [2016-02-20 Sat 08:31]
+   CLOSED: [2016-02-20 Sat 08:31]
 require 'socket'
 hostname=Socket.gethostname
 puts hostname
 ** DONE erb if... else...
-  CLOSED: [2014-10-21 Tue 13:06]
+   CLOSED: [2014-10-21 Tue 13:06]
 http://stackoverflow.com/questions/6932663/whats-wrong-with-my-simple-if-else
 #+begin_example
 <% if 1 > 2 %>
@@ -1002,7 +1292,7 @@ nada                 #option 2 to display static data
 <% end %>
 #+end_example
 ** DONE ruby run bash command: stdin, stdout, stderr = Open3.popen3('ls .')
-  CLOSED: [2016-04-11 Mon 09:46]
+   CLOSED: [2016-04-11 Mon 09:46]
 http://mentalized.net/journal/2010/03/08/5-ways-to-run-commands-from-ruby/
 http://blog.honeybadger.io/capturing-stdout-stderr-from-shell-commands-via-ruby/
 #+BEGIN_EXAMPLE
@@ -1023,7 +1313,7 @@ stderr.readlines
 #+END_EXAMPLE
 ** #  --8<-------------------------- separator ------------------------>8--
 ** DONE ruby check whether string is valid ip address
-  CLOSED: [2016-12-23 Fri 20:34]
+   CLOSED: [2016-12-23 Fri 20:34]
 http://stackoverflow.com/questions/23126073/regular-expression-to-validate-ipv4-address-in-ruby
 
 block = /\d{,2}|1\d{2}|2[0-4]\d|25[0-5]/
@@ -1036,7 +1326,7 @@ re =~ "255.255.255.256" # => nil
 http://stackoverflow.com/questions/12909718/best-ruby-library-to-validate-request-parameters
 
 ** DONE ruby continue loop: use next
-  CLOSED: [2017-01-06 Fri 11:28]
+   CLOSED: [2017-01-06 Fri 11:28]
 http://stackoverflow.com/questions/4230322/in-ruby-how-do-i-skip-a-loop-in-a-each-loop-similar-to-continue
 (1..10).each do |a|
   next if a.even?
@@ -1044,7 +1334,7 @@ http://stackoverflow.com/questions/4230322/in-ruby-how-do-i-skip-a-loop-in-a-eac
 end
 
 ** DONE ruby get ip from hostname
-  CLOSED: [2017-05-24 Wed 18:53]
+   CLOSED: [2017-05-24 Wed 18:53]
 https://stackoverflow.com/questions/42308669/getting-ip-address-from-hostnames-in-ruby
 require "resolv"
 
@@ -1053,247 +1343,4 @@ server_names.each do |name|
   puts address
 end
 ** TODO ruby begin rescue
-* RubyGem                                                          :noexport:
-http://guides.rubygems.org/rubygems-basics/
-| Name                                  | Summary                                                             |
-|---------------------------------------+---------------------------------------------------------------------|
-| gem install bundler -v 1.10.2         |                                                                     |
-| gem uninstall bundler -v 1.10.6       |                                                                     |
-|---------------------------------------+---------------------------------------------------------------------|
-| Psych.method(:parser).source_location | get module file location                                            |
-| $LOAD_PATH                            |                                                                     |
-| YAML.ancestors                        |                                                                     |
-|---------------------------------------+---------------------------------------------------------------------|
-| gem server                            | access this documentation at http://localhost:8808                  |
-| gem env                               |                                                                     |
-| gem list                              |                                                                     |
-| where to find gem                     | /Library/Ruby/Gems/2.0.0/specifications/default/psych-2.0.0.gemspec |
-** DONE gem env
-  CLOSED: [2015-02-28 Sat 22:53]
 
-#+BEGIN_EXAMPLE
-macs-MacBook-Air:fluig-cluster mac$ gem env
-RubyGems Environment:
-  - RUBYGEMS VERSION: 2.4.5
-  - RUBY VERSION: 2.0.0 (2014-05-08 patchlevel 481) [universal.x86_64-darwin13]
-  - INSTALLATION DIRECTORY: /Library/Ruby/Gems/2.0.0
-  - RUBY EXECUTABLE: /System/Library/Frameworks/Ruby.framework/Versions/2.0/usr/bin/ruby
-  - EXECUTABLE DIRECTORY: /usr/bin
-  - SPEC CACHE DIRECTORY: /Users/mac/.gem/specs
-  - SYSTEM CONFIGURATION DIRECTORY: /Library/Ruby/Site
-  - RUBYGEMS PLATFORMS:
-    - ruby
-    - universal-darwin-13
-  - GEM PATHS:
-     - /Library/Ruby/Gems/2.0.0
-     - /Users/mac/.gem/ruby/2.0.0
-     - /System/Library/Frameworks/Ruby.framework/Versions/2.0/usr/lib/ruby/gems/2.0.0
-  - GEM CONFIGURATION:
-     - :update_sources => true
-     - :verbose => true
-     - :backtrace => false
-     - :bulk_threshold => 1000
-  - REMOTE SOURCES:
-     - https://rubygems.org/
-  - SHELL PATH:
-     - /usr/bin
-     - /bin
-     - /usr/sbin
-     - /sbin
-     - /usr/local/bin
-     - /opt/local/bin/
-macs-MacBook-Air:fluig-cluster mac$
-#+END_EXAMPLE
-** DONE gem search all possible verison: sudo gem search kitchen-vagrant
-   CLOSED: [2015-03-03 Tue 10:24]
-** DONE [#A] bundle: manage ruby packaged dependencies: sudo gem install bundler
-  CLOSED: [2015-02-02 Mon 16:55]
-http://bundler.io
-*** ubuntu install gem bundle:
-sudo apt-get install rubygems build-essential
-gem install bundle
-*** mac install bundle: sudo gem install bundler
-#+BEGIN_EXAMPLE
-Getting Started
-
-Getting started with bundler is easy! Open a terminal window and run this command:
-$ gem install bundler
-Specify your dependencies in a Gemfile in your project's root:
-source 'https://rubygems.org'
-gem 'nokogiri'
-gem 'rack', '~>1.1'
-gem 'rspec', :require => 'spec'
-#+END_EXAMPLE
-** DONE [#A] Ruby gem where is psych: 2.0.0?                      :IMPORTANT:
-  CLOSED: [2015-03-07 Sat 12:24]
-ls -lth /Library/Ruby/Gems/2.0.0/specifications/default/psych-2.0.0.gemspec
-
-#+BEGIN_EXAMPLE
-macs-air:puppet-kitchen-example mac$ gem list | grep psych
-gem list | grep psych
-psych (2.0.13, 2.0.0)
-
-macs-air:puppet-kitchen-example mac$ ls -lth /Library/Ruby/Gems/2.0.0/gems | grep psych
-ls -lth /Library/Ruby/Gems/2.0.0/gems | grep psych
-drwxr-xr-x  12 root  wheel   408B Mar  7 12:04 psych-2.0.13
-macs-air:puppet-kitchen-example mac$
-
-  /Library/Ruby/Gems/2.0.0/:
-  find . \( -iname psych-2.0\* \) -ls
-  8809744        8 -rwxr-xr-x    1 root             wheel                   1 Feb 24 08:42 build_info/psych-2.0.13.info
-  8809456      256 -rwxr-xr-x    1 mac              staff              127488 Feb 24 08:42 cache/psych-2.0.13.gem
-  9737887        0 drwxr-xr-x    3 root             wheel                 102 Mar  7 12:02 doc/psych-2.0.13
-  8809745        0 drwxr-xr-x    6 root             wheel                 204 Mar  7 12:04 extensions/universal-darwin-13/2.0.0/psych-2.0.13
-  9738259        0 drwxr-xr-x   12 root             wheel                 408 Mar  7 12:04 gems/psych-2.0.13
-  302588        0 -rwxr-xr-x    1 root             wheel                4837 Jun 28  2014 specifications/default/psych-2.0.0.gemspec
-  9738521        8 -rw-r--r--    1 root             wheel                2041 Mar  7 12:04 specifications/psych-2.0.13.gemspec
-
-  find finished at Sat Mar  7 12:07:46
-#+END_EXAMPLE
-** DONE wrong version of Psych version
-  CLOSED: [2015-03-07 Sat 16:00]
-It try to load psych 2.0.0 by default, however it doesn't exist
-#+BEGIN_EXAMPLE
-macs-air:puppet-kitchen-example mac$ gem list | grep psych
-gem list | grep psych
-psych (2.0.13, 2.0.0)
-#+END_EXAMPLE
-*** HALF librarian-puppet install fail: undefined method `load_file' for Psych:Module (NoMethodError)
-https://github.com/sferik/t/issues/258
-#+BEGIN_EXAMPLE
-macs-air:puppet-kitchen-example mac$ librarian-puppet install
-librarian-puppet install
-/Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/config/file_source.rb:27:in `load': undefined method `load_file' for Psych:Module (NoMethodError)
-	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/config/source.rb:60:in `load!'
-	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/config/source.rb:40:in `[]='
-	from /Library/Ruby/Gems/2.0.0/gems/librarian-puppet-2.1.0/lib/librarian/puppet/cli.rb:55:in `install'
-	from /Library/Ruby/Gems/2.0.0/gems/thor-0.19.1/lib/thor/command.rb:27:in `run'
-	from /Library/Ruby/Gems/2.0.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in `invoke_command'
-	from /Library/Ruby/Gems/2.0.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
-	from /Library/Ruby/Gems/2.0.0/gems/thor-0.19.1/lib/thor/base.rb:440:in `start'
-	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/cli.rb:26:in `block (2 levels) in bin!'
-	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/cli.rb:31:in `returning_status'
-	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/cli.rb:26:in `block in bin!'
-	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/cli.rb:47:in `with_environment'
-	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/cli.rb:26:in `bin!'
-	from /Library/Ruby/Gems/2.0.0/gems/librarian-puppet-2.1.0/bin/librarian-puppet:7:in `<top (required)>'
-	from /usr/bin/librarian-puppet:23:in `load'
-	from /usr/bin/librarian-puppet:23:in `<main>'
-#+END_EXAMPLE
-*** HALF librarian-puppet install fail: undefined method `dump' for Psych:Module (NoMethodError)
-https://github.com/rubinius/rubinius/issues/2913
-https://github.com/rubinius/rubinius/issues/2919
-
-#+BEGIN_EXAMPLE
-macs-air:puppet-kitchen-example mac$ macs-air:puppet-kitchen-example mac$ librarian-puppet install
-librarian-puppet install
-/Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/config/file_source.rb:41:in `block in save': undefined method `dump' for Psych:Module (NoMethodError)
-	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/config/file_source.rb:41:in `open'
-	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/config/file_source.rb:41:in `save'
-	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/config/source.rb:46:in `[]='
-	from /Library/Ruby/Gems/2.0.0/gems/librarian-puppet-2.1.0/lib/librarian/puppet/cli.rb:55:in `install'
-	from /Library/Ruby/Gems/2.0.0/gems/thor-0.19.1/lib/thor/command.rb:27:in `run'
-	from /Library/Ruby/Gems/2.0.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in `invoke_command'
-	from /Library/Ruby/Gems/2.0.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
-	from /Library/Ruby/Gems/2.0.0/gems/thor-0.19.1/lib/thor/base.rb:440:in `start'
-	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/cli.rb:26:in `block (2 levels) in bin!'
-	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/cli.rb:31:in `returning_status'
-	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/cli.rb:26:in `block in bin!'
-	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/cli.rb:47:in `with_environment'
-	from /Library/Ruby/Gems/2.0.0/gems/librarianp-0.6.2/lib/librarian/cli.rb:26:in `bin!'
-	from /Library/Ruby/Gems/2.0.0/gems/librarian-puppet-2.1.0/bin/librarian-puppet:7:in `<top (required)>'
-	from /usr/bin/librarian-puppet:23:in `load'
-	from /usr/bin/librarian-puppet:23:in `<main>'
-#+END_EXAMPLE
-** DONE sudo gem list bundle
-   CLOSED: [2015-08-17 Mon 20:30]
-** TODO aliyun ruby gem is not available
-#+BEGIN_EXAMPLE
------> Running serverspec test suite
------> Installing Serverspec..
-       Fetching: sfl-2.2.gem
-Fetching: sfl-2.2.gem (100%)
-Fetching: sfl-2.2.gem (100%)
-       /opt/chef/embedded/lib/ruby/site_ruby/2.1.0/rubygems/remote_fetcher.rb:249:in `fetch_http': bad response Service Unavailable 503 (https://rubygems-china.oss.aliyuncs.com/quick/Marshal.4.8/net-telnet-0.1.1.gemspec.rz) (Gem::RemoteFetcher::FetchError)
-       	from /opt/chef/embedded/lib/ruby/site_ruby/2.1.0/rubygems/remote_fetcher.rb:247:in `fetch_http'
-       	from /opt/chef/embedded/lib/ruby/site_ruby/2.1.0/rubygems/remote_fetcher.rb:267:in `fetch_path'
-       	from /opt/chef/embedded/lib/ruby/site_ruby/2.1.0/rubygems/source.rb:148:in `fetch_spec'
-       from /opt/chef/embedded/lib/ruby/site_ruby/2.1.0/rubygems/resolver/api_specification.rb:76:in `spec'
-       	from /opt/chef/embedded/lib/ruby/site_ruby/2.1.0/rubygems/resolver/activation_request.rb:74:in `full_spec'
-       	from /opt/chef/embedded/lib/ruby/site_ruby/2.1.0/rubygems/resolver/activation_request.rb:104:in `installed?'
-       	from /opt/chef/embedded/lib/ruby/site_ruby/2.1.0/rubygems/request_set.rb:151:in `block in install'
-       	from /opt/chef/embedded/lib/ruby/site_ruby/2.1.0/rubygems/request_set.rb:150:in `each'
-       	from /opt/chef/embedded/lib/ruby/site_ruby/2.1.0/rubygems/request_set.rb:150:in `install'
-       	from /opt/chef/embedded/lib/ruby/site_ruby/2.1.0/rubygems/dependency_installer.rb:394:in `install'
-       	from /tmp/verifier/gems/gems/busser-0.7.1/lib/busser/rubygems.rb:44:in `install_gem'
-
-       	from /tmp/verifier/gems/gems/busser-serverspec-0.5.7/lib/busser/runner_plugin/serverspec.rb:60:in `install_serverspec'
-       	from /tmp/verifier/gems/gems/busser-serverspec-0.5.7/lib/busser/runner_plugin/serverspec.rb:33:in `test'
-       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/command.rb:27:in `run'
-       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/invocation.rb:126:in `invoke_command'
-       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/invocation.rb:133:in `block in invoke_all'
-       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/invocation.rb:133:in `each'
-       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/invocation.rb:133:in `map'
-       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/invocation.rb:133:in `invoke_all'
-       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/group.rb:232:in `dispatch'
-       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/invocation.rb:115:in `invoke'
-
-       	from /tmp/verifier/gems/gems/busser-0.7.1/lib/busser/command/test.rb:35:in `each'
-       	from /tmp/verifier/gems/gems/busser-0.7.1/lib/busser/command/test.rb:35:in `perform'
-       from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/command.rb:27:in `run'
-       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/invocation.rb:126:in `invoke_command'
-       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/invocation.rb:133:in `block in invoke_all'
-       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/invocation.rb:133:in `each'
-       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/invocation.rb:133:in `map'
-       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/invocation.rb:133:in `invoke_all'
-       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/group.rb:232:in `dispatch'
-       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/invocation.rb:115:in `invoke'
-       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor.rb:40:in `block in register'
-       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/command.rb:27:in `run'
-       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/invocation.rb:126:in `invoke_command'
-       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor.rb:359:in `dispatch'
-       	from /tmp/verifier/gems/gems/thor-0.19.0/lib/thor/base.rb:440:in `start'
-       	from /tmp/verifier/gems/gems/busser-0.7.1/bin/busser:8:in `<top (required)>'
-       	from /tmp/verifier/gems/bin/busser:23:in `load'
-       	from /tmp/verifier/gems/bin/busser:23:in `<main>'
->>>>>> Verify failed on instance <default-ubuntu-1404>.
->>>>>> Please see .kitchen/logs/default-ubuntu-1404.log for more details
->>>>>> ------Exception-------
->>>>>> Class: Kitchen::ActionFailed
->>>>>> Message: SSH exited (1) for command: [env http_proxy=http://172.17.42.1:3128 https_proxy=https://172.17.42.1:3128 sh -c '
-http_proxy="http://172.17.42.1:3128"; export http_proxy
-HTTP_PROXY="http://172.17.42.1:3128"; export HTTP_PROXY
-https_proxy="https://172.17.42.1:3128"; export https_proxy
-HTTPS_PROXY="https://172.17.42.1:3128"; export HTTPS_PROXY
-BUSSER_ROOT="/tmp/verifier"; export BUSSER_ROOT
-GEM_HOME="/tmp/verifier/gems"; export GEM_HOME
-GEM_PATH="/tmp/verifier/gems"; export GEM_PATH
-GEM_CACHE="/tmp/verifier/gems/cache"; export GEM_CACHE
-#+END_EXAMPLE
-** TODO gem package location: /var/lib/gems/2.0.0/gems/docker-0.3.1
-** TODO [#B] gem sources add multiple source
-https://github.com/bundler/bundler/issues/3585
-https://github.com/bundler/bundler/issues/3378
-
-gem sources -r https://rubygems.org/ -r http://rubygems.org/  -a https://ruby.taobao.org/
-
-gem sources -l
-
-gem sources -a https://rubygems.org/
-gem sources -a http://rubygems.org/
-** DONE How to make --no-ri --no-rdoc the default for gem install?
-  CLOSED: [2015-03-16 Mon 22:59]
-http://stackoverflow.com/questions/1381725/how-to-make-no-ri-no-rdoc-the-default-for-gem-install
-Just add this line to your ~/.gemrc or /etc/gemrc:
-gem: --no-rdoc --no-ri
-** DONE gem install berkshelf fail: need to install ruby2.2
-  CLOSED: [2016-08-22 Mon 17:41]
-root@bcdd70fb7cdc:/#     gem install berkshelf --no-ri --no-rdoc
-ERROR:  While executing gem ... (Gem::DependencyError)
-    Unable to resolve dependencies: berkshelf requires buff-extensions (~> 1.0); ridley requires buff-extensions (~> 1.0); buff-config requires buff-extensions (~> 1.0); varia_model requires buff-extensions (~> 1.0)
-** DONE gem install without doc: --no-rdoc --no-ri
-  CLOSED: [2017-05-12 Fri 10:17]
-http://stackoverflow.com/questions/1381725/how-to-make-no-ri-no-rdoc-the-default-for-gem-install
-
-Just add this line to your ~/.gemrc or /etc/gemrc:
-gem: --no-rdoc --no-ri
