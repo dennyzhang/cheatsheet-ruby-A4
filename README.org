@@ -144,6 +144,49 @@ end
 #+SEQ_TODO: TODO HALF ASSIGN | DONE BYPASS DELEGATE CANCELED DEFERRED
 #+LINK_UP:   
 #+LINK_HOME: 
+* HALF ruby render erb                                             :noexport:
+https://idiosyncratic-ruby.com/36-erb-render-standard.html
+https://gist.github.com/bastman/55f1c5a5bb474e472d5e
+http://www.stuartellis.name/articles/erb/
+
+/usr/local/bin/erb authorization-mode=rbac wavefront-api-url=https://try.wavefront.com  ./wavefront-proxy.yml.erb
+
+#+BEGIN_SRC ruby
+require "erb"
+
+def render_erb(template, data = {})
+  render_binding = binding
+  data.each{ |key, value| render_binding.local_variable_set(key.to_sym, value) }
+  ERB.new(template, nil, "%<>").result(render_binding)
+end
+
+example_data = {
+  idiosyncratic: "Ruby"
+}
+
+example_template = <<TEMPLATE
+<%= idiosyncratic %> 3.0
+TEMPLATE
+
+render_erb(example_template, example_data) # => "Ruby 3.0\n"
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+bash-3.2$ /usr/local/bin/erb --help
+print this help
+erb [switches] [var=value...] [inputfile]
+  -x               print ruby script
+  -n               print ruby script with line number
+  -v               enable verbose mode
+  -d               set $DEBUG to true
+  -r library       load a library
+  -S safe_level    set $SAFE (0..1)
+  -E ex[:in]       set default external/internal encodings
+  -U               set default encoding to UTF-8.
+  -T trim_mode     specify trim_mode (0..2, -)
+  -P               ignore lines which start with "%"
+  var=value        set variable
+#+END_EXAMPLE
 * RubyGem                                                          :noexport:
 http://guides.rubygems.org/rubygems-basics/
 | Name                                  | Summary                                                             |
@@ -388,50 +431,8 @@ http://stackoverflow.com/questions/1381725/how-to-make-no-ri-no-rdoc-the-default
 
 Just add this line to your ~/.gemrc or /etc/gemrc:
 gem: --no-rdoc --no-ri
-* HALF ruby render erb                                             :noexport:
-https://idiosyncratic-ruby.com/36-erb-render-standard.html
-https://gist.github.com/bastman/55f1c5a5bb474e472d5e
-http://www.stuartellis.name/articles/erb/
 
-/usr/local/bin/erb authorization-mode=rbac wavefront-api-url=https://try.wavefront.com  ./wavefront-proxy.yml.erb
-
-#+BEGIN_SRC ruby
-require "erb"
-
-def render_erb(template, data = {})
-  render_binding = binding
-  data.each{ |key, value| render_binding.local_variable_set(key.to_sym, value) }
-  ERB.new(template, nil, "%<>").result(render_binding)
-end
-
-example_data = {
-  idiosyncratic: "Ruby"
-}
-
-example_template = <<TEMPLATE
-<%= idiosyncratic %> 3.0
-TEMPLATE
-
-render_erb(example_template, example_data) # => "Ruby 3.0\n"
-#+END_SRC
-
-#+BEGIN_EXAMPLE
-bash-3.2$ /usr/local/bin/erb --help
-print this help
-erb [switches] [var=value...] [inputfile]
-  -x               print ruby script
-  -n               print ruby script with line number
-  -v               enable verbose mode
-  -d               set $DEBUG to true
-  -r library       load a library
-  -S safe_level    set $SAFE (0..1)
-  -E ex[:in]       set default external/internal encodings
-  -U               set default encoding to UTF-8.
-  -T trim_mode     specify trim_mode (0..2, -)
-  -P               ignore lines which start with "%"
-  var=value        set variable
-#+END_EXAMPLE
-* [#A] Ruby                                               :noexport:Personal:
+* [#A] Ruby                                                        :noexport:
 - gem install/list
 - RVM: Ruby Version Manager
 ** Ruby的block interator
@@ -445,22 +446,22 @@ class Hello
 end
 
 myHello = Hello.new()
-myHello. sayHello("hinus"){ puts "in the block" } #如果函数有参数的话,应该放在函数名之后,在块之前。
+myHello. sayHello("hinus"){ puts "in the block" } #如果函数有参数的话,应该放在函数名之后,在块之前.
 #+END_SRC
 *** useful link
    http://www.it314.com/ror/286.html\\
-   Ruby教程之四、块(BLOCK)和迭代器(Iterator) - Sam的网络技术博客
-** Ruby迭代器each、map、collect、inject
+   Ruby教程之四`块(BLOCK)和迭代器(Iterator) - Sam的网络技术博客
+** Ruby迭代器each`map`collect`inject
 http://hi.baidu.com/code4fun/blog/item/c608b60eadf1eaec36d12205.html\\
-Ruby迭代器each、map、collect、inject_._百度空间
+Ruby迭代器each`map`collect`inject_._百度空间
 
-说明：
-each——连续访问集合的所有元素
-collect—-从集合中获得各个元素传递给block,block返回的结果生成新的集合。
-map——-同collect。
-inject——遍历集合中的各个元素,将各个元素累积成返回一个值。
+说明:
+each--连续访问集合的所有元素
+collect--从集合中获得各个元素传递给block,block返回的结果生成新的集合.
+map---同collect.
+inject--遍历集合中的各个元素,将各个元素累积成返回一个值.
 
-例子：
+例子:
 
     def debug(arr)
         puts '--------'
@@ -510,7 +511,6 @@ service_monitor_recipe_dict = {
   "mongodb"=>["common_auth", "nagios_client_mongodb"],
   "redis"=>[["item1", "item2"], "value"]}
 #+END_SRC
-** nil
 ** DONE ruby parse filename string
    CLOSED: [2016-04-03 Sun 19:23]
 default['sandbox_test']['docker_image_url'] = 'http://172.17.0.1:8001/totvslabs_mdm_latest.tar.gz'
@@ -779,6 +779,7 @@ tag_name = 'v2'
 ** logging
 *** DONE simple log: file name, function name, line number
     CLOSED: [2009-06-26 星期五 11:13]
+#+BEGIN_SRC ruby
   def self.log_header(message)
     call_str = caller.first
     array = call_str.split(":")
@@ -803,6 +804,7 @@ tag_name = 'v2'
     str = str + " " + short_filename + ":" + function_name + ":" + line_number + ":" + message
     self.log_header(str)
   end
+#+END_SRC
 ** http server
 *** DONE Send http request
     CLOSED: [2010-02-03 星期三 09:45]
@@ -851,6 +853,7 @@ http://ruby-doc.org/stdlib/libdoc/net/http/rdoc/index.html\\
 net/http: Ruby Standard Library Documentation
 http://snippets.dzone.com/posts/show/788\\
 Custom HTTP/HTTPS GET/POST queries in Ruby
+** #  --8<-------------------------- separator ------------------------>8-- :noexport:
 ** json
    CLOSED: [2014-06-21 Sat 09:00]
 http://stackoverflow.com/questions/5410682/parsing-a-json-string-in-ruby
@@ -907,9 +910,9 @@ make
 make install
 mv /usr/bin/ruby /usr/bin/ruby.bak
 ln -s /usr/local/bin/ruby /usr/bin/ruby
-** DONE ruby中使用源程序当前位置：require File.dirname(__FILE__) + '/../a' :IMPORTANT:
+** DONE ruby中使用源程序当前位置:require File.dirname(__FILE__) + '/../a' :IMPORTANT:
    CLOSED: [2010-02-07 星期日 01:28]
-知道了, ruby源代码中使用的当前位置是指程序运行的当前位置,而不是通常意义上说的源文件所在的位置。
+知道了, ruby源代码中使用的当前位置是指程序运行的当前位置,而不是通常意义上说的源文件所在的位置.
 
 需要将require '/../a'改为 require File.dirname(__FILE__) + '/../a'
 ** # --8<-------------------------- separator ------------------------>8--
@@ -981,8 +984,8 @@ AnotherConstants
 ** rails的ActiveRecord类
 *** basic use
 #+BEGIN_EXAMPLE
-     Active Record objects don‘t specify their attributes directly, but rather infer them from the table definition with which they‘re linked.
-     每个Active Record类对应数据库中的一张表。
+     Active Record objects don't specify their attributes directly, but rather infer them from the table definition with which they're linked.
+     每个Active Record类对应数据库中的一张表.
 #+END_EXAMPLE
 *** Active Record类与数据库表的name mapping规则
     class Invoice < ActiveRecord::Base; end;
@@ -1004,7 +1007,7 @@ AnotherConstants
        end
     end
 **** named bind variables
-     When using multiple parameters in the conditions, it can easily become hard to read exactly what the fourth or fifth question mark is supposed to represent. In those cases, you can resort to named bind variables instead. That‘s done by replacing the question marks with symbols and supplying a hash with values for the matching symbol keys:
+     When using multiple parameters in the conditions, it can easily become hard to read exactly what the fourth or fifth question mark is supposed to represent. In those cases, you can resort to named bind variables instead. That's done by replacing the question marks with symbols and supplying a hash with values for the matching symbol keys:
      Company.find(:first, :conditions => [
        "id = :id AND name = :name AND division = :division AND created_at > :accounting_date",
        { :id => 3, :name => "37signals", :division => "First", :accounting_date => '2005-01-01' }
@@ -1021,7 +1024,7 @@ AnotherConstants
     Dynamic attribute-based finders are a cleaner way of getting (and/or creating) objects by simple queries without turning to SQL.
     They work by appending the name of an attribute to find_by_, find_last_by_, or find_all_by_.
     So instead of writing Person.find(:first, :conditions => ["user_name = ?", user_name]), you just do Person.find_by_user_name(user_name).
-    It‘s also possible to use multiple attributes in the same find by separating them with "and", so you get finders like Person.find_by_user_name_and_password or even Payment.find_by_purchaser_and_state_and_country.
+    It's also possible to use multiple attributes in the same find by separating them with "and", so you get finders like Person.find_by_user_name_and_password or even Payment.find_by_purchaser_and_state_and_country.
 *** find_or_create_by_
     find_or_create_by_ will return the object if it already exists and otherwise creates it, then returns it.
     For example:
@@ -1035,7 +1038,7 @@ AnotherConstants
  # Now 'Bob' exist and is an 'admin'
  User.find_or_create_by_name('Bob', :age => 40) { |u| u.admin = true }
 *** find_or_initialize_by_
-Use the find_or_initialize_by_ finder if you want to return a new record without saving it first. Protected attributes won‘t be set unless they are given in a block. For example:
+Use the find_or_initialize_by_ finder if you want to return a new record without saving it first. Protected attributes won't be set unless they are given in a block. For example:
 
   # No 'Winter' tag exists
   winter = Tag.find_or_initialize_by_name("Winter")
@@ -1078,7 +1081,7 @@ http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/3431\\
    CLOSED: [2010-03-06 星期六 02:11]
 ** DONE RoR dump object                                           :IMPORTANT:
    CLOSED: [2010-07-25 星期日 01:31]
-In views: DebugHelper’s debug(object)
+In views: DebugHelper's debug(object)
 In controllers, models, and other code: puts YAML::dump(object)
 *** useful link
 http://stackoverflow.com/questions/904314/is-there-a-print-r-or-var-dump-equivalent-in-ruby-ruby-on-rails\\
@@ -1342,4 +1345,3 @@ server_names.each do |name|
   puts address
 end
 ** TODO ruby begin rescue
-
