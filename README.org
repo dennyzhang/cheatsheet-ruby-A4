@@ -32,9 +32,7 @@ See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][
 | Check whether variable is nil         | =if value.nil?=                                |
 | Run system command                    | =system("commandhere")=                        |
 | Run bash command                      | =stdin, stdout, stderr = Open3.popen3('ls .')= |
-
 ** List
-
 | Name                     | Comment                                 |
 |--------------------------+-----------------------------------------|
 | Check existence          | ['Cat', 'Dog', 'Bird'].include? 'Dog'   |
@@ -42,9 +40,7 @@ See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][
 | Remove item from list    | =l1.delete_at(2)=                       |
 | Remove duplicate entries | =[1,2,2,1,4,4,5,6,7,8,5,6].uniq=        |
 | Deep copy a list         | =l1=l.dup=                              |
-
 ** String
-
 | Name                  | Comment                                            |
 |-----------------------+----------------------------------------------------|
 | Substring             | =string[1..3]=                                     |
@@ -52,27 +48,20 @@ See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][
 | Replace               | "Welcome to PHP Essentials!".gsub("PHP", "Ruby")   |
 | Remove trailing comma | "ab;123;".chomp(";")                               |
 | Strip whitespace      | =host = host.strip()=                              |
-
 ** Integer
-
 | Name | Comment |
 |------+---------|
 |      |         |
-
 ** Conversion
-
 | Name                    | Comment                                   |
 |-------------------------+-------------------------------------------|
 | Convert string to int   | "14".to_i, "1,112".delete(',').to_i       |
 | Round float to 2 digits | =(5.65235534).round(2)=                   |
 | Format datetime         | =puts time.strftime("%Y-%m-%d %H:%M:%S")= |
-
 ** Dict & Set
-
 | Name | Comment |
 |------+---------|
 |      |         |
-
 ** File
 | Name                          | Comment                            |
 |-------------------------------+------------------------------------|
@@ -88,7 +77,6 @@ File.open('/tmp/test.txt', 'a') { |file| file.write("your text\n") }
 # overwrite
 File.open('/tmp/test.txt', 'w') { |file| file.write("your text\n") }
 #+END_SRC
-
 ** Code Snippets
 - Get ip from eth0
 #+BEGIN_SRC ruby
@@ -133,8 +121,8 @@ end
 #+END_HTML
 * org-mode configuration                                           :noexport:
 #+STARTUP: overview customtime noalign logdone showall
-#+DESCRIPTION: 
-#+KEYWORDS: 
+#+DESCRIPTION:
+#+KEYWORDS:
 #+LATEX_HEADER: \usepackage[margin=0.6in]{geometry}
 #+LaTeX_CLASS_OPTIONS: [8pt]
 #+LATEX_HEADER: \usepackage[english]{babel}
@@ -154,8 +142,8 @@ end
 #+OPTIONS:   TeX:t LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+EXPORT_EXCLUDE_TAGS: exclude noexport
 #+SEQ_TODO: TODO HALF ASSIGN | DONE BYPASS DELEGATE CANCELED DEFERRED
-#+LINK_UP:   
-#+LINK_HOME: 
+#+LINK_UP:
+#+LINK_HOME:
 * HALF ruby render erb                                             :noexport:
 https://idiosyncratic-ruby.com/36-erb-render-standard.html
 https://gist.github.com/bastman/55f1c5a5bb474e472d5e
@@ -443,7 +431,6 @@ http://stackoverflow.com/questions/1381725/how-to-make-no-ri-no-rdoc-the-default
 
 Just add this line to your ~/.gemrc or /etc/gemrc:
 gem: --no-rdoc --no-ri
-
 * [#A] Ruby                                                        :noexport:
 - gem install/list
 - RVM: Ruby Version Manager
@@ -1335,10 +1322,8 @@ re = /\A#{block}\.#{block}\.#{block}\.#{block}\z/
 
 re =~ "255.255.255.255" # => 0
 re =~ "255.255.255.256" # => nil
-
 ** TODO ruby prameter check library
 http://stackoverflow.com/questions/12909718/best-ruby-library-to-validate-request-parameters
-
 ** DONE ruby continue loop: use next
    CLOSED: [2017-01-06 Fri 11:28]
 http://stackoverflow.com/questions/4230322/in-ruby-how-do-i-skip-a-loop-in-a-each-loop-similar-to-continue
@@ -1346,7 +1331,6 @@ http://stackoverflow.com/questions/4230322/in-ruby-how-do-i-skip-a-loop-in-a-eac
   next if a.even?
   puts a
 end
-
 ** DONE ruby get ip from hostname
    CLOSED: [2017-05-24 Wed 18:53]
 https://stackoverflow.com/questions/42308669/getting-ip-address-from-hostnames-in-ruby
