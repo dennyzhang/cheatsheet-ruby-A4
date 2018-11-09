@@ -18,10 +18,9 @@
 
 - PDF Link: [[https://github.com/dennyzhang/cheatsheet-ruby-A4/blob/master/cheatsheet-ruby-A4.pdf][cheatsheet-ruby-A4.pdf]], Category: [[https://cheatsheet.dennyzhang.com/category/languages][languages]]
 - Blog URL: https://cheatsheet.dennyzhang.com/cheatsheet-ruby-A4
+- Related posts: [[https://cheatsheet.dennyzhang.com/cheatsheet-golang-A4][Golang CheatSheet]], [[https://cheatsheet.dennyzhang.com/cheatsheet-python-A4][Python CheatSheet]], [[https://github.com/topics/denny-cheatsheets][#denny-cheatsheets]]
 
 File me [[https://github.com/dennyzhang/cheatsheet-ruby-A4/issues][Issues]] or star [[https://github.com/DennyZhang/cheatsheet-ruby-A4][this repo]].
-
-See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][#denny-cheatsheets]]
 ** Summary
 | Name                                  | Comment                                        |
 |---------------------------------------+------------------------------------------------|
@@ -1341,3 +1340,10 @@ server_names.each do |name|
   puts address
 end
 ** TODO ruby begin rescue
+* TODO generate ruby Gemfile.lock: run bundle update               :noexport:
+https://stackoverflow.com/questions/13101945/how-to-re-sync-gemfile-lock-on-changes-to-gemfile
+
+To bring the Gemfile.lock in line with Gemfile edits, run bundle check.
+
+To bring the Gemfile.lock in line with both the Gemfile edits AND the latest compatible gems, run bundle update.
+https://www.viget.com/articles/bundler-best-practices/
