@@ -511,17 +511,14 @@ service_monitor_recipe_dict = {
 #+END_SRC
 ** DONE ruby parse filename string
    CLOSED: [2016-04-03 Sun 19:23]
-default['sandbox_test']['docker_image_url'] = 'http://172.17.0.1:8001/totvslabs_mdm_latest.tar.gz'
+default['sandbox_test']['docker_image_url'] = 'http://172.17.0.1:8001/my_latest.tar.gz'
 
 irb
-str1 = 'http://172.17.0.1:8001/totvslabs_mdm_latest.tar.gz'
+str1 = 'http://172.17.0.1:8001/my_latest.tar.gz'
 require 'pathname'
 
 Pathname.new(str1).basename
 Pathname.new(str1).dirname
-
-docker_image_file = 'totvslabs_mdm.tar.gz'
-tag_name = 'v2'
 ** [#A] Array操作                                                 :Important:
     http://www.ruby-doc.org/docs/ProgrammingRuby/html/ref_c_array.html\\
     Programming Ruby: The Pragmatic Programmer's Guide
