@@ -26,6 +26,7 @@ File me [[https://github.com/dennyzhang/cheatsheet-ruby-A4/issues][Issues]] or s
 |------------------------------------------+------------------------------------------------|
 | Check syntax                             | =ruby -c my.rb=                                |
 | Generate random key                      | =r = Random.new, r.rand(10...42)=              |
+| Install ruby 2.4                         | [[https://github.com/dennyzhang/cheatsheet-ruby-A4/blob/master/DOC.md#ubuntu-install-install-ruby-24][GitHub: Ubuntu install ruby 2.4]]                |
 | Install package with specific version    | =gem install rubocop -v "0.44.1"=              |
 | Install package with a range of versions | =gem install rails -v "~>4.0.0"=               |
 | Install package with a range of versions | =gem install rails -v ">3.1, <4.1"=            |
@@ -1346,3 +1347,16 @@ To bring the Gemfile.lock in line with Gemfile edits, run bundle check.
 
 To bring the Gemfile.lock in line with both the Gemfile edits AND the latest compatible gems, run bundle update.
 https://www.viget.com/articles/bundler-best-practices/
+* DONE ruby bundler: bundler v1 and v2                             :noexport:
+  CLOSED: [2019-03-27 Wed 11:39]
+https://github.com/bundler/bundler/issues/6882
+
+https://bundler.io/blog/2019/01/04/an-update-on-the-bundler-2-release.html
+https://github.com/rvm/rvm/issues/1860
+
+#+BEGIN_EXAMPLE
+root@43f787fd-827a-4ce2-4edb-7bd6e59a91fc:/tmp/build/a6da2f14# /usr/local/bin/bundler --version
+/usr/lib/ruby/2.4.0/rubygems.rb:271:in `find_spec_for_exe': can't find gem bundler (>= 0.a) (Gem::GemNotFoundException)
+	from /usr/lib/ruby/2.4.0/rubygems.rb:299:in `activate_bin_path'
+	from /usr/local/bin/bundler:23:in `<main>'
+#+END_EXAMPLE
