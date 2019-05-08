@@ -1,6 +1,6 @@
 * Ruby CheatSheet                                                 :Languages:
 :PROPERTIES:
-:type:     ruby
+:type:     language
 :export_file_name: cheatsheet-ruby-A4.pdf
 :END:
 
@@ -20,7 +20,8 @@
 - Blog URL: https://cheatsheet.dennyzhang.com/cheatsheet-ruby-A4
 - Related posts: [[https://cheatsheet.dennyzhang.com/cheatsheet-golang-A4][Golang CheatSheet]], [[https://cheatsheet.dennyzhang.com/cheatsheet-python-A4][Python CheatSheet]], [[https://github.com/topics/denny-cheatsheets][#denny-cheatsheets]]
 
-File me [[https://github.com/dennyzhang/cheatsheet-ruby-A4/issues][Issues]] or star [[https://github.com/DennyZhang/cheatsheet-ruby-A4][this repo]].
+File me [[https://github.com/dennyzhang/cheatsheet.dennyzhang.com/issues][Issues]] or star [[https://github.com/dennyzhang/cheatsheet.dennyzhang.com][this repo]].
+
 ** Summary
 | Name                                     | Comment                                        |
 |------------------------------------------+------------------------------------------------|
@@ -114,8 +115,8 @@ end
 ** More Resources
  License: Code is licensed under [[https://www.dennyzhang.com/wp-content/mit_license.txt][MIT License]].
 #+BEGIN_HTML
- <a href="https://www.dennyzhang.com"><img align="right" width="201" height="268" src="https://raw.githubusercontent.com/USDevOps/mywechat-slack-group/master/images/denny_201706.png"></a>
- <a href="https://www.dennyzhang.com"><img align="right" src="https://raw.githubusercontent.com/USDevOps/mywechat-slack-group/master/images/dns_small.png"></a>
+ <a href="https://cheatsheet.dennyzhang.com"><img align="right" width="201" height="268" src="https://raw.githubusercontent.com/USDevOps/mywechat-slack-group/master/images/denny_201706.png"></a>
+ <a href="https://cheatsheet.dennyzhang.com"><img align="right" src="https://raw.githubusercontent.com/dennyzhang/cheatsheet.dennyzhang.com/master/images/cheatsheet_dns.png"></a>
 
  <a href="https://www.linkedin.com/in/dennyzhang001"><img align="bottom" src="https://www.dennyzhang.com/wp-content/uploads/sns/linkedin.png" alt="linkedin" /></a>
  <a href="https://github.com/dennyzhang"><img align="bottom"src="https://www.dennyzhang.com/wp-content/uploads/sns/github.png" alt="github" /></a>
@@ -135,7 +136,7 @@ end
 #+LATEX_HEADER: \rhead{Updated: \today}
 #+LATEX_HEADER: \rfoot{\thepage\ of \pageref{LastPage}}
 #+LATEX_HEADER: \lfoot{\href{https://github.com/dennyzhang/cheatsheet-ruby-A4}{GitHub: https://github.com/dennyzhang/cheatsheet-ruby-A4}}
-#+LATEX_HEADER: \lhead{\href{https://cheatsheet.dennyzhang.com/cheatsheet-slack-A4}{Blog URL: https://cheatsheet.dennyzhang.com/cheatsheet-ruby-A4}}
+#+LATEX_HEADER: \lhead{\href{https://cheatsheet.dennyzhang.com/cheatsheet-ruby-A4}{Blog URL: https://cheatsheet.dennyzhang.com/cheatsheet-ruby-A4}}
 #+AUTHOR: Denny Zhang
 #+EMAIL:  denny@dennyzhang.com
 #+TAGS: noexport(n)

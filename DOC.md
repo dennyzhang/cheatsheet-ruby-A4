@@ -1,4 +1,4 @@
-# Ubuntu install install ruby 2.4
+# Ubuntu install ruby 2.4
 ```
 $ sudo apt-add-repository ppa:brightbox/ruby-ng
 $ sudo apt-get update
